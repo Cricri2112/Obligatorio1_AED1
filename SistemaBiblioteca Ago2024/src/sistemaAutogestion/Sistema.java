@@ -4,7 +4,8 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno crearSistemaDeGestion() {
-        return Retorno.noImplementada();
+        // Crear listas
+        return Retorno.ok();
     }
 
     @Override
