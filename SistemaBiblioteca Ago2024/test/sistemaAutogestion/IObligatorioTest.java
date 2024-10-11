@@ -121,9 +121,9 @@ public class IObligatorioTest {
         Retorno r6 = miSistema.agregarLibro("Reflexiones", "978-3-16-148410-0", "", 10);
         assertEquals(Retorno.error1().resultado, r6.resultado);
         
-        // CHEQUEAR TEMA DE UN INT VACIO O NULL.. QUE SE SUPONE QUE VA
-        Retorno r7 = miSistema.agregarLibro("Reflexiones", "978-3-16-148410-0", "Filosofía", null);
-        assertEquals(Retorno.error1().resultado, r7.resultado);
+    // El tipo de dato int no puede ser null
+    //    Retorno r7 = miSistema.agregarLibro("Reflexiones", "978-3-16-148410-0", "Filosofía", null);
+    //    assertEquals(Retorno.error1().resultado, r7.resultado);
     }
     public void testAgregarLibroError2() {
         Retorno r8 = miSistema.agregarLibro("Reflexiones", "978-3-16-148410-0", "Filosofía", 10);
