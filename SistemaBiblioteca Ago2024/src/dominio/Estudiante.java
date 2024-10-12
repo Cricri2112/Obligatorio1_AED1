@@ -5,11 +5,33 @@ public class Estudiante implements Comparable<Estudiante> {
     private String nombre;
     private String apellido;
     private int numero;
+    private ListaDoble<Libro> prestamosActivos = new ListaDoble<Libro>();
     
     public Estudiante(String nombre, String apellido, int numero) {
         this.setNombre(nombre);
         this.setApellido(apellido);
-        this.setNumero(numero);    
+        this.setNumero(numero);
+    }
+    
+    public Boolean agregarPrestamo(Libro libro) {
+        if(this.prestamosActivos.cantElementos() > 8) {
+            return false;
+        }
+        if(this.prestamosActivos.contieneElemento(libro)) {
+            return false;
+        }
+        
+        this.prestamosActivos.agregarOrdenado(libro);
+        return true;
+    }
+    
+    public Boolean eliminarPrestamo(Libro libro) {
+        if(!this.prestamosActivos.contieneElemento(libro)) {
+            return false;
+        }
+        
+        this.prestamosActivos.borrarElemento(libro);
+        return true;
     }
 
     public String getNombre() {

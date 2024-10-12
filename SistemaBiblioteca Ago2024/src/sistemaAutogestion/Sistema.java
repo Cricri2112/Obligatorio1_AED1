@@ -21,9 +21,14 @@ public class Sistema implements IObligatorio {
         
         Estudiante nuevo = new Estudiante(nombre, apellido, numero);
         
-        if(Estudiantes.contieneElemento(nuevo)) return Retorno.error3();
-        
-        Estudiantes.agregarInicio(nuevo);
+        if(Estudiantes.esVacia()) {
+            Estudiantes.agregarOrdenado(nuevo);
+        }
+        else {
+            if(Estudiantes.contieneElemento(nuevo)) return Retorno.error3();
+
+            Estudiantes.agregarOrdenado(nuevo);
+        }
         return Retorno.ok();
     }
 
@@ -31,10 +36,13 @@ public class Sistema implements IObligatorio {
     public Retorno obtenerEstudiante(int numero) {
         if(numero <=0 || numero > 500000) return Retorno.error1();
         
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        
         Estudiante buscar = (Estudiante) Estudiantes.obtenerElemento(new Estudiante(null, null, numero));
         if(buscar== null) return Retorno.error2();
-        String res = buscar.toString();        
-        return Retorno.ok(res);
+        
+        res.valorString = buscar.toString();        
+        return res;
     }
 
     @Override
@@ -69,7 +77,9 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarEstudiantes() {
-          return Retorno.noImplementada();
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        res.valorString = Estudiantes.mostrar();
+        return res;
     }
 
     @Override

@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/sistemaAutogestion/IObligatorio.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/IListaDoble.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/Estudiante.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/NodoDoble.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/sistemaAutogestion/Sistema.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/ListaDoble.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/sistemaAutogestion/Retorno.java</file>
-            <file>file:/C:/Users/cri_1/OneDrive/Escritorio/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/test/sistemaAutogestion/IObligatorioTest.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/sistemaAutogestion/IObligatorio.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/test/sistemaAutogestion/IObligatorioTest.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/sistemaAutogestion/Sistema.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/test/sistemaAutogestion/IObligatorioTest2.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/Estudiante.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/IListaDoble.java</file>
+            <file>file:/C:/Users/Dell/Desktop/A4.01/ORT/Semestre%203/Algoritmos%201/Obligatorio1_AED1/SistemaBiblioteca%20Ago2024/src/dominio/ListaDoble.java</file>
         </group>
     </open-files>
 </project-private>

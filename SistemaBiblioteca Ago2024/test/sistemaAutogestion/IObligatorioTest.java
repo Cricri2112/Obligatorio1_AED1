@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public class IObligatorioTest {
     
-    private Sistema miSistema;
+    private IObligatorio miSistema;
     
     public IObligatorioTest() {
     }
@@ -59,7 +59,6 @@ public class IObligatorioTest {
     @Test
     public void testAgregarEstudianteError3() {        
         miSistema.agregarEstudiante("Marco2", "Aurelio2", 20);
-        
         Retorno r11 = miSistema.agregarEstudiante("Marco2", "Aurelio2", 20);
         assertEquals(Retorno.error3().resultado, r11.resultado);
     }
