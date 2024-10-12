@@ -12,6 +12,10 @@ public class Estudiante implements Comparable<Estudiante> {
         this.setApellido(apellido);
         this.setNumero(numero);
     }
+
+    public ListaDoble<Libro> getPrestamosActivos() {
+        return prestamosActivos;
+    }
     
     public Boolean agregarPrestamo(Libro libro) {
         if(this.prestamosActivos.cantElementos() > 8) {

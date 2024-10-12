@@ -23,7 +23,8 @@ public interface IObligatorio {
     //post: Elimina el estudiante que tenga el número indicado. 
     public Retorno eliminarEstudiante(int numero);
     
-    //pre:      post:
+    //pre: Se recibe Libro donde se conoce: su nombre, ISBN (único), su categoría y la cantidad de libros en stock mayor a 0.     
+    //post: Se agrega el libro a la lista de libros.
     public Retorno agregarLibro(String nombre, String ISBN, String categoría, int cantidad);
     //pre:      post:
     public Retorno eliminarLibro(String ISBN);

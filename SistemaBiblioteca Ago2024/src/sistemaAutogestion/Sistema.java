@@ -5,8 +5,8 @@ import dominio.Estudiante;
 import dominio.Libro;
 
 public class Sistema implements IObligatorio {
-    private ListaDoble<Libro> Libros = new ListaDoble();
-    private ListaDoble<Estudiante> Estudiantes = new ListaDoble();
+    public ListaDoble<Libro> Libros = new ListaDoble();
+    public ListaDoble<Estudiante> Estudiantes = new ListaDoble();
     
     @Override
     public Retorno crearSistemaDeGestion() {
@@ -21,14 +21,10 @@ public class Sistema implements IObligatorio {
         
         Estudiante nuevo = new Estudiante(nombre, apellido, numero);
         
-        if(Estudiantes.esVacia()) {
-            Estudiantes.agregarOrdenado(nuevo);
-        }
-        else {
-            if(Estudiantes.contieneElemento(nuevo)) return Retorno.error3();
+        if(Estudiantes.contieneElemento(nuevo)) return Retorno.error3();
 
-            Estudiantes.agregarOrdenado(nuevo);
-        }
+        Estudiantes.agregarOrdenado(nuevo);
+   
         return Retorno.ok();
     }
 
@@ -36,23 +32,41 @@ public class Sistema implements IObligatorio {
     public Retorno obtenerEstudiante(int numero) {
         if(numero <=0 || numero > 500000) return Retorno.error1();
         
-        Retorno res = new Retorno(Retorno.Resultado.OK);
-        
         Estudiante buscar = (Estudiante) Estudiantes.obtenerElemento(new Estudiante(null, null, numero));
         if(buscar== null) return Retorno.error2();
         
+        Retorno res = new Retorno(Retorno.Resultado.OK);        
         res.valorString = buscar.toString();        
         return res;
     }
 
     @Override
     public Retorno eliminarEstudiante(int numero) {
-        return Retorno.noImplementada();
+        if(numero <=0 || numero > 500000) return Retorno.error1();
+        
+        Estudiante estudiante = (Estudiante) Estudiantes.obtenerElemento(new Estudiante(null, null, numero));
+        if(estudiante== null) return Retorno.error2();
+        
+        if(estudiante.getPrestamosActivos().cantElementos()>0) return Retorno.error3();
+        
+        Estudiantes.borrarElemento(estudiante);
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        return res;
     }
 
     @Override
     public Retorno agregarLibro(String nombre, String ISBN, String categoría, int cantidad) {
-           return Retorno.noImplementada();
+        if(nombre == null || ISBN == null || categoría == null|| nombre == "" || ISBN == "" || categoría == "") return Retorno.error1();
+        
+        if(cantidad <=0) return Retorno.error3();
+        
+        Libro agregar = new Libro(nombre, ISBN, categoría, cantidad);
+       
+        if(Libros.contieneElemento(agregar)) return Retorno.error2();        
+        
+        Libros.agregarOrdenado(agregar);
+        
+        return Retorno.ok();
     }
     
         @Override
@@ -84,7 +98,9 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarLibros() {
-          return Retorno.noImplementada();
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        res.valorString = Libros.mostrar();
+        return res;
     }
 
     @Override

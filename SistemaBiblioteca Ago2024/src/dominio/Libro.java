@@ -41,7 +41,23 @@ public class Libro implements Comparable<Libro> {
 
     @Override
     public int compareTo(Libro o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.ISBN.compareTo(o.ISBN) < 0
+                ? -1
+                : this.ISBN.compareTo(o.ISBN) == 0
+                    ? 0
+                    : 1;
+    }
+    
+    public String toString(){
+        return this.getNombre() + "#" + this.getISBN()+ "#" + this.getCategoria();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if(o == null) return false;
+        if(o.getClass() != this.getClass()) return false;
+        Libro comparar = (Libro) o;
+        return  this.ISBN.compareTo(comparar.ISBN)==0;                   
     }
     
     

@@ -236,21 +236,52 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     @Override
     public Boolean borrarElemento(Comparable obj) {
         if(!this.esVacia()){
-            NodoDoble actual = this.getInicio();
+            if(this.menorPrimerMayorUltimo(obj)){
+                return false;
+            }
             if(this.cantidadNodos==1 ){
-                if(actual.equals(obj)) {
+                if(this.getInicio().equals(obj)) {
                     this.borrarInicio();
                     return true;
-                } else {
+                } 
+                else {
                     return false;
-                }
-                
-            }else {
-                
+                }                
             }
-        }
-        throw new UnsupportedOperationException("Not supported yet.");
+            else {
+               if(this.getInicio().equals(obj)) {
+                   this.borrarInicio();
+                   return true;
+               }
+               if(this.getFin().equals(obj)) {
+                   this.borrarFin();
+                   return true;
+               }               
+                NodoDoble actual = this.getInicio().getSiguiente();
+                Boolean sigue = true;
+                while(actual!= null && sigue){
+                    if(
+                        actual.getValor().compareTo(obj) == 0 ||
+                        actual.getValor().compareTo(obj) == -1
+                    ) {
+                        sigue = false;
+                    }
+                    else {
+                        actual = actual.getSiguiente();
+                    }
+                }
+                if(actual.equals(obj)){
+                    actual.getAnterior().setSiguiente(actual.getSiguiente());
+                    actual.getSiguiente().setAnterior(actual.getAnterior());
+                    this.cantidadNodos--;
+                    return true;
+                }
+                return false;
+            }
+        } 
+        return false;
     }
+    
 
     @Override
     public Comparable borrarElementoYRetObjeto(Comparable obj) {
