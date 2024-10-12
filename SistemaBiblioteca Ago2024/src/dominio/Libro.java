@@ -1,6 +1,6 @@
 package dominio;
 
-public class Libro {
+public class Libro implements Comparable<Libro> {
     
     private String nombre;
     private String ISBN;
@@ -37,6 +37,11 @@ public class Libro {
     }
     public void setCantidad(int cantidad){
         this.cantidad = cantidad;
+    }
+
+    @Override
+    public int compareTo(Libro o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

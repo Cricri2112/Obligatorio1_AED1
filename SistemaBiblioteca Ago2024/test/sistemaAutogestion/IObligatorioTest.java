@@ -36,6 +36,7 @@ public class IObligatorioTest {
         Retorno r3 = miSistema.agregarEstudiante("María", "Correa", 500000);
         assertEquals(Retorno.ok().resultado, r3.resultado);
     }
+    @Test
     public void testAgregarEstudianteError1() {
         Retorno r4 = miSistema.agregarEstudiante(null, "Fernandez", 50);
         assertEquals(Retorno.error1().resultado, r4.resultado);
@@ -46,6 +47,7 @@ public class IObligatorioTest {
         Retorno r7 = miSistema.agregarEstudiante("Pablo", "", 52);
         assertEquals(Retorno.error1().resultado, r7.resultado);
     }
+    @Test
     public void testAgregarEstudianteError2() {
         Retorno r8 = miSistema.agregarEstudiante("Marco", "Aurelio", 0);
         assertEquals(Retorno.error2().resultado, r8.resultado);
@@ -54,7 +56,10 @@ public class IObligatorioTest {
         Retorno r10 = miSistema.agregarEstudiante("María", "Correa", 500001);
         assertEquals(Retorno.error2().resultado, r10.resultado);
     }
-    public void testAgregarEstudianteError3() {
+    @Test
+    public void testAgregarEstudianteError3() {        
+        miSistema.agregarEstudiante("Marco2", "Aurelio2", 20);
+        
         Retorno r11 = miSistema.agregarEstudiante("Marco2", "Aurelio2", 20);
         assertEquals(Retorno.error3().resultado, r11.resultado);
     }
@@ -62,9 +67,11 @@ public class IObligatorioTest {
 
     @Test
     public void testObtenerEstudianteOk() {
+        miSistema.agregarEstudiante("Marco2", "Aurelio2", 20);
         Retorno r = miSistema.obtenerEstudiante(20);
         assertEquals(Retorno.ok().resultado, r.resultado);
     }
+    @Test
     public void testObtenerEstudianteError1() {
         Retorno r1 = miSistema.obtenerEstudiante(0);
         assertEquals(Retorno.error1().resultado, r1.resultado);
@@ -73,6 +80,7 @@ public class IObligatorioTest {
         Retorno r3 = miSistema.obtenerEstudiante(500001);
         assertEquals(Retorno.error1().resultado, r3.resultado);
     }
+    @Test
     public void testObtenerEstudianteError2() {
         Retorno r4 = miSistema.obtenerEstudiante(256576);
         assertEquals(Retorno.error2().resultado, r4.resultado);

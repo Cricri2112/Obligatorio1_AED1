@@ -36,5 +36,14 @@ public class NodoDoble<T extends Comparable<T>> {
         this.siguiente = siguiente;
     }
     
+    @Override
+    public boolean equals(Object o) {
+        if(o == null) return false;
+        if(o.getClass() != this.getValor().getClass()) return false;
+
+        return  this.valor.equals(o);
+                   
+    }
+    
     
 }

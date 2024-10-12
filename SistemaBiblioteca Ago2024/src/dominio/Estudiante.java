@@ -1,6 +1,6 @@
 package dominio;
 
-public class Estudiante {
+public class Estudiante implements Comparable<Estudiante> {
     
     private String nombre;
     private String apellido;
@@ -32,9 +32,28 @@ public class Estudiante {
     public void setNumero(int numero) {
         this.numero = numero;
     }
+
+    @Override
+    public int compareTo(Estudiante o) {
+        return this.numero < o.numero
+                ? -1
+                : this.numero == o.numero
+                    ? 0
+                    : 1;
+    }
     
+    public String toString(){
+        return this.getNombre() + "#" + this.getApellido() + "#" + this.getNumero();
+    }
     
-    
+    @Override
+    public boolean equals(Object o) {
+        if(o == null) return false;
+        if(o.getClass() != this.getClass()) return false;
+        Estudiante comparar = (Estudiante) o;
+        return  this.numero == comparar.numero;
+                   
+    }
     
     
 }
