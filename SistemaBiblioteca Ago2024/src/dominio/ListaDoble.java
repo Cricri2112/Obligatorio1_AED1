@@ -35,9 +35,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
     
     //Implementar interfaz
-
-
-
+    
     @Override
     public boolean esVacia() {
         return this.cantidadNodos==0;
@@ -61,7 +59,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     @Override
     public int cantElementos() {
         return this.getCantidadNodos();
-    }    
+    }
 
     @Override
     public void agregarInicio(T nodo) {
@@ -105,6 +103,24 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     public void agregarOrdenado(Comparable nodo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    @Override
+    public Boolean contieneElemento(Comparable nodo) {
+        NodoDoble actual = this.getInicio();
+        NodoDoble buscado = new NodoDoble(nodo);
+        while(actual != null) {
+            if(buscado.getValor().compareTo(actual.getValor()) == 0) return true; 
+                
+            actual = actual.getSiguiente();
+        }
+        return false;
+    }
+    
+    @Override
+    public Comparable obtenerElemento(Comparable nodo) {
+        NodoDoble buscar = new NodoDoble(nodo);
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public void borrarInicio() {
@@ -130,11 +146,4 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     public void vaciar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public Comparable obtenerElemento(Comparable nodo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
 }

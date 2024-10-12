@@ -11,6 +11,7 @@ public interface IListaDoble<T extends Comparable<T>> {
     public void agregarFinal(T nodo);
     public Boolean agregarInicioSiNoExiste(T n);    
     public Boolean agregarFinalSiNoExiste(T n);
+    public Boolean contieneElemento(T n);
     public void agregarOrdenado(T nodo);
     
     public void borrarInicio();

@@ -1,16 +1,29 @@
 package sistemaAutogestion;
 
-public class Sistema implements IObligatorio {
+import dominio.ListaDoble;
+import dominio.Estudiante;
 
+public class Sistema implements IObligatorio {
+    private ListaDoble Libros = new ListaDoble();
+    private ListaDoble Estudiantes = new ListaDoble();
+    
     @Override
     public Retorno crearSistemaDeGestion() {
-        // Crear listas
+        
         return Retorno.ok();
     }
 
     @Override
     public Retorno agregarEstudiante(String nombre, String apellido, int numero) {
-        return Retorno.noImplementada();
+        if(nombre == null || apellido == null || nombre == "" || apellido == "") return Retorno.error1();
+        if(numero <= 0 || numero > 500000) return Retorno.error2();
+        
+        Estudiante nuevo = new Estudiante(nombre, apellido, numero);
+        
+        if(Estudiantes.contieneElemento(nuevo)) return Retorno.error3();
+        
+        Estudiantes.agregarInicio(nuevo);
+        return Retorno.ok();
     }
 
     @Override
