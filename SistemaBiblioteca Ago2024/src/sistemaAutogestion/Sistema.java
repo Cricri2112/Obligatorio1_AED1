@@ -3,9 +3,10 @@ package sistemaAutogestion;
 import dominio.ListaDoble;
 import dominio.Estudiante;
 import dominio.Libro;
+import dominio.ListaDobleLibro;
 
 public class Sistema implements IObligatorio {
-    public ListaDoble<Libro> Libros = new ListaDoble();
+    public ListaDobleLibro Libros = new ListaDobleLibro();
     public ListaDoble<Estudiante> Estudiantes = new ListaDoble();
     
     @Override
@@ -105,7 +106,10 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarLibros(String categoria) {
-           return Retorno.noImplementada();
+        if(categoria == null || categoria == "") return Retorno.error1();
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        res.valorString = Libros.mostrar(categoria);
+        return res;
     }
 
     @Override

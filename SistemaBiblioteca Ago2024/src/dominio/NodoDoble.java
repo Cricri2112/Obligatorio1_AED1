@@ -3,8 +3,8 @@ package dominio;
 
 public class NodoDoble<T extends Comparable<T>> {
     private T valor;
-    private NodoDoble anterior;
-    private NodoDoble siguiente;
+    private NodoDoble<T> anterior;
+    private NodoDoble<T> siguiente;
 
     public NodoDoble(T valor) {
         this.valor = valor;
@@ -20,19 +20,19 @@ public class NodoDoble<T extends Comparable<T>> {
         this.valor = valor;
     }
 
-    public NodoDoble getAnterior() {
+    public NodoDoble<T> getAnterior() {
         return anterior;
     }
 
-    public void setAnterior(NodoDoble anterior) {
+    public void setAnterior(NodoDoble<T> anterior) {
         this.anterior = anterior;
     }
 
-    public NodoDoble getSiguiente() {
+    public NodoDoble<T> getSiguiente() {
         return siguiente;
     }
 
-    public void setSiguiente(NodoDoble siguiente) {
+    public void setSiguiente(NodoDoble<T> siguiente) {
         this.siguiente = siguiente;
     }
     

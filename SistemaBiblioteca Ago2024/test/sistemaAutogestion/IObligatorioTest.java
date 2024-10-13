@@ -165,11 +165,17 @@ public class IObligatorioTest {
         assertEquals(Retorno.ok().resultado, r.resultado);
     }
     
-    @Test
+@Test
     public void testListarLibrosXCategoriaOk() {
-        Retorno r = miSistema.listarLibros("Filosofía");
-        assertEquals(Retorno.ok().resultado, r.resultado);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 250);
+        miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria2", 150);
+        miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria1", 450);
+        miSistema.agregarLibro("NombreLibro3", "ISBN3", "Categoria3", 350);
+        Retorno ret = miSistema.listarLibros("Categoria1");
+        assertEquals(Retorno.ok().resultado, ret.resultado);
+        assertEquals("NombreLibro2#ISBN2#Categoria1|NombreLibro4#ISBN4#Categoria1", ret.valorString);
     }
+    @Test
     public void testListarLibrosXCategoriaError1() {
         Retorno r1 = miSistema.listarLibros("");
         assertEquals(Retorno.error1().resultado, r1.resultado);

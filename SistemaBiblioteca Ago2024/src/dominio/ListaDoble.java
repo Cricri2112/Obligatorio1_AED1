@@ -3,25 +3,25 @@ package dominio;
 
 public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
-    private NodoDoble inicio = null;
-    private NodoDoble fin = null;
+    private NodoDoble<T> inicio = null;
+    private NodoDoble<T> fin = null;
     private int cantidadNodos = 0;
 
     public ListaDoble() {}
 
-    private NodoDoble getInicio() {
+    public NodoDoble<T> getInicio() {
         return inicio;
     }
 
-    private void setInicio(NodoDoble inicio) {
+    private void setInicio(NodoDoble<T> inicio) {
         this.inicio = inicio;
     }
 
-    private NodoDoble getFin() {
+    private NodoDoble<T> getFin() {
         return fin;
     }
 
-    private void setFin(NodoDoble fin) {
+    private void setFin(NodoDoble<T> fin) {
         this.fin = fin;
     }
 
@@ -45,11 +45,11 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
         if(this.esVacia()){  
             return "";
         }else {
-            NodoDoble actual = this.getInicio();
+            NodoDoble<T> actual = this.getInicio();
             return mostrarRec(actual);
         }
     }
-    private String mostrarRec(NodoDoble nodo) {
+    private String mostrarRec(NodoDoble<T> nodo) {
         String res = "";
         
         if(nodo.getSiguiente() == null) {
@@ -66,7 +66,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
 
     private void agregarInicio(T obj) {
-        NodoDoble nuevo = new NodoDoble(obj);
+        NodoDoble<T> nuevo = new NodoDoble<T>(obj);
         if(this.esVacia()){
             this.setInicio(nuevo);
             this.setFin(nuevo);
@@ -79,7 +79,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
 
     private void agregarFinal(T obj) {
-        NodoDoble nuevo = new NodoDoble(obj);
+        NodoDoble<T> nuevo = new NodoDoble<T>(obj);
         if(this.esVacia()){
             this.setInicio(nuevo);
             this.setFin(nuevo);
@@ -102,8 +102,8 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
                 this.agregarFinal(obj);
             }
             else {
-                NodoDoble actual = this.getInicio();
-                NodoDoble agregar = new  NodoDoble(obj);
+                NodoDoble<T> actual = this.getInicio();
+                NodoDoble<T> agregar = new  NodoDoble<T>(obj);
                 boolean agregado = false;
                 
                 while(actual!=null && !agregado){
@@ -123,17 +123,17 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
     
     @Override
-    public Boolean agregarInicioSiNoExiste(Comparable n) {
+    public Boolean agregarInicioSiNoExiste(T n) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Boolean agregarFinalSiNoExiste(Comparable n) {
+    public Boolean agregarFinalSiNoExiste(T n) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 
-    private Boolean menorPrimerMayorUltimo(Comparable obj) {
+    private Boolean menorPrimerMayorUltimo(T obj) {
         return (
             this.getInicio().getValor().compareTo(obj) == 1 || 
             this.getFin().getValor().compareTo(obj) == -1
@@ -141,13 +141,13 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
     
     @Override
-    public Boolean contieneElemento(Comparable obj) {
+    public Boolean contieneElemento(T obj) {
         if(this.esVacia()) {
             return false;
         }
         
-        NodoDoble actual = this.getInicio();
-        NodoDoble buscar = new NodoDoble(obj);
+        NodoDoble<T> actual = this.getInicio();
+        NodoDoble<T> buscar = new NodoDoble<T>(obj);
         
         if(this.menorPrimerMayorUltimo(obj)) {
             return false;
@@ -157,7 +157,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
             while(actual != null && sigue) {
                 if(
                     actual.getValor().compareTo(buscar.getValor()) == 0 || 
-                    actual.getValor().compareTo(buscar.getValor()) == -1
+                    actual.getValor().compareTo(buscar.getValor()) == 1
                 ) {
                     sigue = false;
                 }
@@ -171,19 +171,19 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
     
     @Override
-    public Comparable obtenerElemento(Comparable obj) {
+    public T obtenerElemento(T obj) {
         if(this.esVacia()) return null;
         
         if(this.menorPrimerMayorUltimo(obj)) {
             return null;
         }
         else {
-            NodoDoble actual = this.getInicio();
+            NodoDoble<T> actual = this.getInicio();
             Boolean sigue = true;
             while(actual!= null && sigue){
                 if(
                     actual.getValor().compareTo(obj) == 0 ||
-                    actual.getValor().compareTo(obj) == -1
+                    actual.getValor().compareTo(obj) == 1
                 ) {
                     sigue = false;
                 }
@@ -233,7 +233,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
 
     @Override
-    public Boolean borrarElemento(Comparable obj) {
+    public Boolean borrarElemento(T obj) {
         if(!this.esVacia()){
             if(this.menorPrimerMayorUltimo(obj)){
                 return false;
@@ -256,12 +256,12 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
                    this.borrarFin();
                    return true;
                }               
-                NodoDoble actual = this.getInicio().getSiguiente();
+                NodoDoble<T> actual = this.getInicio().getSiguiente();
                 Boolean sigue = true;
                 while(actual!= null && sigue){
                     if(
                         actual.getValor().compareTo(obj) == 0 ||
-                        actual.getValor().compareTo(obj) == -1
+                        actual.getValor().compareTo(obj) == 1
                     ) {
                         sigue = false;
                     }
@@ -283,12 +283,14 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
 
     @Override
-    public Comparable borrarElementoYRetObjeto(Comparable obj) {
+    public T borrarElementoYRetObjeto(T obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void vaciar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.setInicio(null);
+        this.setFin(null);
+        this.cantidadNodos=0;
     }
 }
