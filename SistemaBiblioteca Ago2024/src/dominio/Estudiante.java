@@ -5,7 +5,7 @@ public class Estudiante implements Comparable<Estudiante> {
     private String nombre;
     private String apellido;
     private int numero;
-    private ListaDoble<Libro> prestamosActivos = new ListaDoble<Libro>();
+    private ListaDoble<Prestamo> prestamos = new ListaDoble<Prestamo>() {};
     
     public Estudiante(String nombre, String apellido, int numero) {
         this.setNombre(nombre);
@@ -13,28 +13,39 @@ public class Estudiante implements Comparable<Estudiante> {
         this.setNumero(numero);
     }
 
-    public ListaDoble<Libro> getPrestamosActivos() {
-        return prestamosActivos;
+    public ListaDoble<Prestamo> getPrestamos() {
+        return prestamos;
     }
     
-    public Boolean agregarPrestamo(Libro libro) {
-        if(this.prestamosActivos.cantElementos() > 8) {
-            return false;
-        }
-        if(this.prestamosActivos.contieneElemento(libro)) {
+    public Boolean agregarPrestamo(Prestamo nuevo) {
+        
+        NodoDoble<Prestamo> actual = prestamos.getInicio();
+        int contadorActivos = 0;
+        while(actual!=null){
+            if(actual.getValor().getActivo()){
+                contadorActivos++;
+            }
+            actual = actual.getSiguiente();
+        }       
+        
+        if(contadorActivos > 7) {
             return false;
         }
         
-        this.prestamosActivos.agregarOrdenado(libro);
+        Prestamo buscar = this.prestamos.obtenerElemento(nuevo);
+        
+        if(buscar!= null && buscar.getActivo()) {
+            return false;
+        }        
+        this.prestamos.agregarInicio(nuevo);
         return true;
     }
     
-    public Boolean eliminarPrestamo(Libro libro) {
-        if(!this.prestamosActivos.contieneElemento(libro)) {
+    public Boolean devolverPrestamo(Prestamo prestamo) {
+        if(!this.prestamos.contieneElemento(prestamo)) {
             return false;
         }
-        
-        this.prestamosActivos.borrarElemento(libro);
+        this.prestamos.borrarElemento(prestamo);
         return true;
     }
 

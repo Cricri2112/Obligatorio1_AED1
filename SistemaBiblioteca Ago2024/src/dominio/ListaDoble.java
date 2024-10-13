@@ -1,7 +1,7 @@
 
 package dominio;
 
-public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
+public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
     private NodoDoble<T> inicio = null;
     private NodoDoble<T> fin = null;
@@ -64,8 +64,13 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     public int cantElementos() {
         return this.getCantidadNodos();
     }
+    
+//    @Override
+//    public void recorrer(){
+//        
+//    }
 
-    private void agregarInicio(T obj) {
+    public void agregarInicio(T obj) {
         NodoDoble<T> nuevo = new NodoDoble<T>(obj);
         if(this.esVacia()){
             this.setInicio(nuevo);
@@ -78,7 +83,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
         this.cantidadNodos++;        
     }
 
-    private void agregarFinal(T obj) {
+    public void agregarFinal(T obj) {
         NodoDoble<T> nuevo = new NodoDoble<T>(obj);
         if(this.esVacia()){
             this.setInicio(nuevo);
@@ -122,16 +127,6 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
         }
     }
     
-    @Override
-    public Boolean agregarInicioSiNoExiste(T n) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Boolean agregarFinalSiNoExiste(T n) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 
     private Boolean menorPrimerMayorUltimo(T obj) {
         return (

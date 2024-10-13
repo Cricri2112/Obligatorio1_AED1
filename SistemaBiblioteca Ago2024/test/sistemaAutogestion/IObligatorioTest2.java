@@ -2,6 +2,7 @@ package sistemaAutogestion;
 
 import dominio.Estudiante;
 import dominio.Libro;
+import dominio.Prestamo;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -138,8 +139,10 @@ public class IObligatorioTest2 {
     public void testEliminarEstudianteError3() {       
         Sistema sistema = new Sistema();
         sistema.agregarEstudiante("Nombre", "Apellido", 1111);
+        sistema.agregarLibro("NombreLibro", "ISBN", "Categoria", 150);
         Estudiante estudiante = (Estudiante) sistema.Estudiantes.obtenerElemento(new Estudiante(null, null, 1111));
-        estudiante.agregarPrestamo(new Libro("El Quijote", "978-3-16-148410-0", "Literatura", 5));
+        Libro libro = (Libro) sistema.Libros.obtenerElemento(new Libro(null, "ISBN1", null, 0));
+        estudiante.agregarPrestamo(new Prestamo(estudiante, libro));
         Retorno r5 = sistema.eliminarEstudiante(1111);
         assertEquals(Retorno.error3().resultado, r5.resultado);
     }

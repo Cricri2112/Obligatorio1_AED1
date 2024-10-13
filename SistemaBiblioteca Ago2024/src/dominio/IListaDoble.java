@@ -6,10 +6,8 @@ public interface IListaDoble<T extends Comparable<T>> {
     
     public boolean esVacia();
     public int cantElementos();
+    //public void recorrer();
     
-
-    public Boolean agregarInicioSiNoExiste(T obj);    
-    public Boolean agregarFinalSiNoExiste(T obj);
     public Boolean contieneElemento(T obj);
     public void agregarOrdenado(T obj);
     
@@ -23,5 +21,6 @@ public interface IListaDoble<T extends Comparable<T>> {
     //Busca el nodo y si lo encuentra lo devuelve, sino devuelve null
     public T obtenerElemento(T obj);
         
+    
     
 }

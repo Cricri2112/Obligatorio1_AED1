@@ -7,7 +7,7 @@ import dominio.ListaDobleLibro;
 
 public class Sistema implements IObligatorio {
     public ListaDobleLibro Libros = new ListaDobleLibro();
-    public ListaDoble<Estudiante> Estudiantes = new ListaDoble();
+    public ListaDoble<Estudiante> Estudiantes = new ListaDoble() {};
     
     @Override
     public Retorno crearSistemaDeGestion() {
@@ -48,7 +48,7 @@ public class Sistema implements IObligatorio {
         Estudiante estudiante = (Estudiante) Estudiantes.obtenerElemento(new Estudiante(null, null, numero));
         if(estudiante== null) return Retorno.error2();
         
-        if(estudiante.getPrestamosActivos().cantElementos()>0) return Retorno.error3();
+        if(estudiante.getPrestamos().cantElementos()>0) return Retorno.error3();
         
         Estudiantes.borrarElemento(estudiante);
         Retorno res = new Retorno(Retorno.Resultado.OK);
