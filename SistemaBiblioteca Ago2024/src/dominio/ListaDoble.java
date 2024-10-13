@@ -64,11 +64,6 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
     public int cantElementos() {
         return this.getCantidadNodos();
     }
-    
-//    @Override
-//    public void recorrer(){
-//        
-//    }
 
     public void agregarInicio(T obj) {
         NodoDoble<T> nuevo = new NodoDoble<T>(obj);
@@ -274,12 +269,6 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
             }
         } 
         return false;
-    }
-    
-
-    @Override
-    public T borrarElementoYRetObjeto(T obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
