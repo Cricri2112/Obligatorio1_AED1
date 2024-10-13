@@ -7,19 +7,12 @@ import dominio.ListaDobleLibro;
 import dominio.Prestamo;
 
 public class Sistema implements IObligatorio {
-    public ListaDobleLibro Libros;
-    public ListaDoble<Estudiante> Estudiantes;
-    public ListaDoble<Prestamo> Prestamos;
-    
-    public Sistema() {
-        crearSistemaDeGestion();
-    }
+    public ListaDobleLibro Libros = new ListaDobleLibro() {};
+    public ListaDoble<Estudiante> Estudiantes = new ListaDoble() {};
+    public ListaDoble<Prestamo> Prestamos = new ListaDoble() {};
     
     @Override
     public Retorno crearSistemaDeGestion() {
-        Libros = new ListaDobleLibro() {};
-        Estudiantes = new ListaDoble() {};
-        Prestamos = new ListaDoble() {};
         return Retorno.ok();
     }
 
