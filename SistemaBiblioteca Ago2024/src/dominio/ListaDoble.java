@@ -1,7 +1,6 @@
 
 package dominio;
 
-
 public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
     private NodoDoble inicio = null;
@@ -172,7 +171,7 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     }
     
     @Override
-    public Comparable obtenerElemento(Comparable obj) {
+    public Comparable<T> obtenerElemento(Comparable obj) {
         if(this.esVacia()) return null;
         
         if(this.menorPrimerMayorUltimo(obj)) {

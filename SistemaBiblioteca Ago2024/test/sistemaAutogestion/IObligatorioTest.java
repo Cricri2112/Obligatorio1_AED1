@@ -1,5 +1,7 @@
 package sistemaAutogestion;
 
+import dominio.Estudiante;
+import dominio.Libro;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -87,9 +89,11 @@ public class IObligatorioTest {
 
     @Test
     public void testEliminarEstudianteOk() {
-        Retorno r = miSistema.eliminarEstudiante(20);
+        miSistema.agregarEstudiante("Nombre", "Apellido", 1111);
+        Retorno r = miSistema.eliminarEstudiante(1111);
         assertEquals(Retorno.ok().resultado, r.resultado);
     }
+    @Test
     public void testEliminarEstudianteError1() {
         Retorno r1 = miSistema.eliminarEstudiante(0);
         assertEquals(Retorno.error1().resultado, r1.resultado);
@@ -98,13 +102,18 @@ public class IObligatorioTest {
         Retorno r3 = miSistema.eliminarEstudiante(500001);
         assertEquals(Retorno.error1().resultado, r3.resultado);
     }
+    @Test
     public void testEliminarEstudianteError2() {
         Retorno r4 = miSistema.eliminarEstudiante(256576);
         assertEquals(Retorno.error2().resultado, r4.resultado);
     }
+    @Test
     public void testEliminarEstudianteError3() {
-        // Estudiante con prestamos activos
-        Retorno r5 = miSistema.eliminarEstudiante(2);
+        Sistema sistema = new Sistema();
+        sistema.agregarEstudiante("Nombre", "Apellido", 1111);
+        Estudiante estudiante = (Estudiante) sistema.Estudiantes.obtenerElemento(new Estudiante(null, null, 1111));
+        estudiante.agregarPrestamo(new Libro("El Quijote", "978-3-16-148410-0", "Literatura", 5));
+        Retorno r5 = sistema.eliminarEstudiante(1111);
         assertEquals(Retorno.error3().resultado, r5.resultado);
     }
 
