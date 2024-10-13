@@ -1,7 +1,6 @@
 
 package dominio;
 
-
 public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
     private NodoDoble inicio = null;
