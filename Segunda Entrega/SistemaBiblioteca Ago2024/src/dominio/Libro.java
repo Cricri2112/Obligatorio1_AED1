@@ -9,7 +9,7 @@ public class Libro implements Comparable<Libro> {
     private String nombre;
     private String ISBN;
     private String categoria;
-    private ListaDoble<Prestamo> prestamos = new ListaDoble<Prestamo>() {};
+    private ListaDoblePrestamo prestamos = new ListaDoblePrestamo() {};
     private Cola<Estudiante> reservas = new Cola(){};
     private int cantidad;
     private int disponibles;
@@ -68,7 +68,7 @@ public class Libro implements Comparable<Libro> {
     }
 
     public void agregarPrestamo(Prestamo prestamo) {
-        this.prestamos.agregarOrdenado(prestamo);
+        this.prestamos.agregarInicio(prestamo);
     }
     
 
@@ -77,6 +77,7 @@ public class Libro implements Comparable<Libro> {
         //La clase estudiante tiene un metodo que controla la cantidad de préstamos activos.
 
         if (disponibles > 0) {
+            this.prestamos.agregarInicio(new Prestamo(estudiante, this));
             disponibles--;
             return true;
         } else reservas.encolar(estudiante);      
@@ -117,6 +118,11 @@ public class Libro implements Comparable<Libro> {
         Libro comparar = (Libro) o;
         return  this.ISBN.compareTo(comparar.ISBN)==0;                   
     }
+    
+    public int cantPrestadosHist(){
+        return prestamos.cantElementos();
+    }
+
     
     
 }

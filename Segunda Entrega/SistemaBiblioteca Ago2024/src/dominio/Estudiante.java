@@ -39,8 +39,8 @@ public class Estudiante implements Comparable<Estudiante> {
         // Chequeo si ya tiene un préstamo activo de ese libro
         if(yaTienePrestamoActivo(libro.getISBN())) return false;
         if (libro.prestar(this)) {
-            this.prestamos.agregarOrdenado(nuevoPrestamo);
-            libro.agregarPrestamo(nuevoPrestamo);
+            this.prestamos.agregarInicio(nuevoPrestamo);
+            
             return true;
         }
         return false;
