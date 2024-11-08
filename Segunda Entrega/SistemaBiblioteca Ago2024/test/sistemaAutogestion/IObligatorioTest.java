@@ -380,4 +380,29 @@ public class IObligatorioTest {
         Retorno r5 = miSistema.devolverLibro("ISBN2", 1001);
         assertEquals(Retorno.error4().resultado, r5.resultado);
     }
+    
+    @Test
+    public void testEliminarLibroOk() {
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        Retorno r = miSistema.eliminarLibro("ISBN2");
+        assertEquals(Retorno.ok().resultado, r.resultado);
+    }
+    
+     @Test
+    public void testEliminarLibroError1() {
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        Retorno r1 = miSistema.eliminarLibro("");
+        assertEquals(Retorno.error1().resultado, r1.resultado);
+        Retorno r2 = miSistema.eliminarLibro(null);
+        assertEquals(Retorno.error1().resultado, r2.resultado);
+    }
+    
+     @Test
+    public void testEliminarLibroError2() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r3 = miSistema.eliminarLibro("ISBN2");
+        assertEquals(Retorno.error2().resultado, r3.resultado);
+    }
 }

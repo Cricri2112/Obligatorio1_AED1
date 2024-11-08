@@ -127,11 +127,6 @@ public class Sistema implements IObligatorio {
         return Retorno.ok();        
     }
 
-    
-//1. Si el ISBN es vacío o null. 
-//2. Si no existe un libro con ese ISBN. 
-//3. Si no existe un estudiante con ese número. 
-//4. Si no existe un préstamo activo de ese libro para ese estudiante. 
     @Override
     public Retorno devolverLibro(String ISBN, int numero) {
         if (ISBN == "" || ISBN == null) return Retorno.error1();        
@@ -144,10 +139,18 @@ public class Sistema implements IObligatorio {
 
         return existeEstudiante.devolverPrestamo(existeLibro) ? Retorno.ok() : Retorno.error4();
     }
-
+            
+//1.- Si el ISBN es vacío o null.
+//2.- Si se realizaron préstamos de dicho libro. 
     @Override
     public Retorno eliminarLibro(String ISBN) {
-        return Retorno.noImplementada();
+        if (ISBN == "" || ISBN == null) return Retorno.error1();  
+        
+        Libro existeLibro = Libros.obtenerElemento(new Libro(ISBN));
+        if(existeLibro.getPrestamos().cantElementos() > 0) return Retorno.error2();
+        
+        Libros.borrarElemento(existeLibro);
+        return Retorno.ok();
     }
 //-----------------------------------------------
     
