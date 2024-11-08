@@ -20,7 +20,7 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
         this.inicio = inicio;
     }
 
-    private NodoDoble<T> getFin() {
+    public NodoDoble<T> getFin() {
         return fin;
     }
 
@@ -28,11 +28,11 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
         this.fin = fin;
     }
 
-    private int getCantidadNodos() {
+    public int getCantidadNodos() {
         return cantidadNodos;
     }
 
-    private void setCantidadNodos(int cantidadNodos) {
+    public void setCantidadNodos(int cantidadNodos) {
         this.cantidadNodos = cantidadNodos;
     }
     
@@ -69,7 +69,7 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
     }
 
     public void agregarInicio(T obj) {
-        NodoDoble<T> nuevo = new NodoDoble<T>(obj);
+        NodoDoble<T> nuevo = new NodoDoble(obj);
         if (this.esVacia()) {
             this.setInicio(nuevo);
             this.setFin(nuevo);
@@ -169,11 +169,13 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
         else {
             NodoDoble<T> actual = this.getInicio();
             Boolean sigue = true;
+            NodoDoble<T> res = null;
             while(actual!= null && sigue){
                 if(
-                    actual.getValor().compareTo(obj) == 0 ||
+                    actual.getValor().equals(obj) ||
                     actual.getValor().compareTo(obj) == 1 //Si se pasa corta, lista ordenada.
                 ) {
+                    res = actual;
                     sigue = false;
                 }
                 else {
@@ -182,7 +184,7 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
             }
             // Nunca debería ser null porque ya se pregunta si: 
             // this.menorPrimerMayorUltimo(nodo)
-            return actual.equals(obj)
+            return actual != null
                 ? actual.getValor()
                 : null;
         }

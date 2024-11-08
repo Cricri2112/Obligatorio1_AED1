@@ -1,5 +1,7 @@
 package sistemaAutogestion;
 
+import Tads.ListaDoble;
+import dominio.Estudiante;
 import dominio.ListaDobleLibro;
 
 
@@ -8,8 +10,9 @@ public interface IObligatorio {
     /*
     **************** REGISTROS **************************************
     */
-    public String getPrestamos();
+    public String mostrarPrestamos();
     public ListaDobleLibro getLibros();
+    public ListaDoble<Estudiante> getEstudiantes();
     //pre: No existe un sistema     
     //post: Crea las listas (de Estudiante, Libro) que se van a utilizar en el sistema.
     public Retorno crearSistemaDeGestion();

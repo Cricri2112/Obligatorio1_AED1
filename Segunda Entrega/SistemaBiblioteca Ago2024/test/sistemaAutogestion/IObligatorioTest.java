@@ -383,9 +383,13 @@ public class IObligatorioTest {
     
     @Test
     public void testEliminarLibroOk() {
-        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);        
+        miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria1", 1);        
+        miSistema.agregarLibro("NombreLibro3", "ISBN3", "Categoria1", 1);
+//        System.out.println("Lista original " + miSistema.listarLibros().valorString);
         Retorno r = miSistema.eliminarLibro("ISBN2");
         assertEquals(Retorno.ok().resultado, r.resultado);
+//        System.out.println("Libro ISBN2 Eliminado " + miSistema.listarLibros().valorString);
     }
     
      @Test
@@ -404,5 +408,30 @@ public class IObligatorioTest {
         miSistema.prestarLibro("ISBN2", 1000);
         Retorno r3 = miSistema.eliminarLibro("ISBN2");
         assertEquals(Retorno.error2().resultado, r3.resultado);
+    }
+    
+    @Test
+    public void testListarPrestamosOk() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria2", 15);
+        miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria3", 23);
+        miSistema.prestarLibro("ISBN2", 1000);
+        miSistema.prestarLibro("ISBN1", 1000);
+        miSistema.prestarLibro("ISBN4", 1000);
+        Estudiante e = miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000));
+        e.devolverPrestamo(new Libro("ISBN2"));
+        Retorno r = miSistema.listarPrestamos(1000);
+        System.out.println(miSistema.listarPrestamos(1000));
+        System.out.println(miSistema.mostrarPrestamos());
+        assertEquals(Retorno.ok().resultado, r.resultado);
+        //nombreLibro1#ISBN1#categoria1#estado|nombreLibro2#ISBN2#categoria2#estado 
+        assertEquals("NombreLibro2#ISBN2#Categoria1#false|NombreLibro1#ISBN1#Categoria3#true|NombreLibro4#ISBN4#Categoria2#true", r.valorString);
+    }
+    
+    @Test
+    public void testListarPrestamosError1(){
+        Retorno r1 = miSistema.listarPrestamos(1002);
+        assertEquals(Retorno.error1().resultado, r1.resultado);
     }
 }

@@ -15,14 +15,21 @@ public class Sistema implements IObligatorio {
     public Sistema() {
         crearSistemaDeGestion();
     }
-     @Override
-    public String getPrestamos() {
+    @Override
+    public String mostrarPrestamos() {
         return Prestamos.mostrar();
     }
-      @Override
+
+    @Override
     public ListaDobleLibro getLibros() {
         return Libros;
     }
+
+    @Override
+    public ListaDoble<Estudiante> getEstudiantes() {
+        return Estudiantes;
+    }
+    
     
     @Override
     public Retorno crearSistemaDeGestion() {
@@ -178,9 +185,16 @@ public class Sistema implements IObligatorio {
 
 //------------------------------------------------------
 // Segunda entrega
+    
+//1. Si no existe un estudiante con ese nombre.     
     @Override
     public Retorno listarPrestamos(int numero) {
-        return Retorno.noImplementada();
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
+        if (existeEstudiante == null) return Retorno.error1();
+        
+        res.valorString = existeEstudiante.getPrestamos().mostrar();
+        return res;
     }
 
     @Override
