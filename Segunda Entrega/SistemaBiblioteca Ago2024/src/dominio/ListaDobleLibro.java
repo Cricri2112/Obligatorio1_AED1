@@ -1,5 +1,8 @@
 package dominio;
 
+import Tads.ListaDoble;
+import Tads.NodoDoble;
+
 public class ListaDobleLibro extends ListaDoble<Libro>  {
     public ListaDobleLibro(){
         super();

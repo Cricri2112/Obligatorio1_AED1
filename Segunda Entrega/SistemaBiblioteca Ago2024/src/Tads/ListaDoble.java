@@ -1,5 +1,8 @@
 
-package dominio;
+package Tads;
+
+import Tads.NodoDoble;
+import Tads.IListaDoble;
 
 public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     

@@ -1,5 +1,5 @@
 
-package dominio;
+package Tads;
 
 public class NodoDoble<T extends Comparable<T>> {
     private T valor;

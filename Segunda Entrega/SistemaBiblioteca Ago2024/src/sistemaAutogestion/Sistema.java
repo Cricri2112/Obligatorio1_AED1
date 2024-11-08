@@ -1,6 +1,6 @@
 package sistemaAutogestion;
 
-import dominio.ListaDoble;
+import Tads.ListaDoble;
 import dominio.Estudiante;
 import dominio.Libro;
 import dominio.ListaDobleLibro;

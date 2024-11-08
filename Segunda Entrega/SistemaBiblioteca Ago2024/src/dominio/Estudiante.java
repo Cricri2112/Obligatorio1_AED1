@@ -1,5 +1,7 @@
 package dominio;
 
+import Tads.ListaDoble;
+
 public class Estudiante implements Comparable<Estudiante> {
     
     private String nombre;

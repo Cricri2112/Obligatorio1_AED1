@@ -1,5 +1,5 @@
 
-package dominio;
+package Tads;
 
 public interface IListaDoble<T extends Comparable<T>> {
     public String mostrar();
