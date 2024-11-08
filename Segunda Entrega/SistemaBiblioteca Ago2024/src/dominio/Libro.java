@@ -2,6 +2,7 @@ package dominio;
 
 import Tads.ListaDoble;
 import Tads.Cola;
+import Tads.NodoSimple;
 
 public class Libro implements Comparable<Libro> {
     
@@ -67,7 +68,7 @@ public class Libro implements Comparable<Libro> {
     }
 
     public void agregarPrestamo(Prestamo prestamo) {
-        this.prestamos.agregarInicio(prestamo);
+        this.prestamos.agregarOrdenado(prestamo);
     }
     
 
@@ -81,6 +82,16 @@ public class Libro implements Comparable<Libro> {
         } else reservas.encolar(estudiante);      
         return false;
 
+    }
+    
+    public void devolver () {
+        disponibles++;
+        
+        NodoSimple<Estudiante> aux = reservas.getInicio();
+        if(aux!= null) {
+            aux.getValor().agregarPrestamo(this);
+            reservas.desencolar();
+        }
     }
 
     @Override

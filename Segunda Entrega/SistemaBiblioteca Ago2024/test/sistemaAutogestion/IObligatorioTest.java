@@ -322,4 +322,62 @@ public class IObligatorioTest {
         Retorno r5 = miSistema.reservarLibro("ISBN2", 1001);
         assertEquals(Retorno.error4().resultado, r5.resultado);
     }
+    
+    @Test
+    public void testDevolverLibroOk() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r = miSistema.devolverLibro("ISBN2", 1000);
+        assertEquals(Retorno.ok().resultado, r.resultado);
+    }
+
+    
+    
+//1. Si el ISBN es vacío o null. 
+
+    @Test
+    public void testDevolverLibroError1() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r1 = miSistema.devolverLibro("", 1001);
+        assertEquals(Retorno.error1().resultado, r1.resultado);
+        Retorno r2 = miSistema.devolverLibro(null, 1001);
+        assertEquals(Retorno.error1().resultado, r2.resultado);
+    }
+
+    //2. Si no existe un libro con ese ISBN. 
+
+    @Test
+    public void testDevolverLibroError2() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r3 = miSistema.devolverLibro("ISBN3", 1001);
+        assertEquals(Retorno.error2().resultado, r3.resultado);
+    }
+//3. Si no existe un estudiante con ese número. 
+
+    @Test
+    public void testDevolverLibroError3() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        Retorno r4 = miSistema.devolverLibro("ISBN2", 1002);
+        assertEquals(Retorno.error3().resultado, r4.resultado);
+    }
+
+//4. Si no existe un préstamo activo de ese libro para ese estudiante. 
+    @Test
+    public void testDevolverLibroError4() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        Retorno r5 = miSistema.devolverLibro("ISBN2", 1001);
+        assertEquals(Retorno.error4().resultado, r5.resultado);
+    }
 }

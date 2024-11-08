@@ -39,7 +39,7 @@ public class Estudiante implements Comparable<Estudiante> {
         // Chequeo si ya tiene un préstamo activo de ese libro
         if(yaTienePrestamoActivo(libro.getISBN())) return false;
         if (libro.prestar(this)) {
-            this.prestamos.agregarInicio(nuevoPrestamo);
+            this.prestamos.agregarOrdenado(nuevoPrestamo);
             libro.agregarPrestamo(nuevoPrestamo);
             return true;
         }
@@ -50,14 +50,16 @@ public class Estudiante implements Comparable<Estudiante> {
         return prestamos.tienePrestamoActivo(ISBN);
     }
     
-    public Boolean devolverPrestamo(Prestamo prestamo) {
-        Prestamo buscar = this.prestamos.obtenerElemento(prestamo);
+    public Boolean devolverPrestamo(Libro libro) {
+        
+        Prestamo buscar = this.prestamos.obtenerElemento(new Prestamo(this, libro));
         
         if( buscar == null || !buscar.getActivo()) {
             return false;
         }
         
         buscar.setActivo(false);
+        libro.devolver();        
 
         return true;
     }
@@ -104,4 +106,6 @@ public class Estudiante implements Comparable<Estudiante> {
         return  this.numero == comparar.numero;
                    
     }
+    
+    
 }

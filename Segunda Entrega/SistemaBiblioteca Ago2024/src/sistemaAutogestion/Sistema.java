@@ -105,15 +105,12 @@ public class Sistema implements IObligatorio {
         if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error5();
         
         existeEstudiante.agregarPrestamo(existeLibro); 
-        Prestamos.agregarInicio(new Prestamo(existeEstudiante, existeLibro));
+        Prestamos.agregarOrdenado(new Prestamo(existeEstudiante, existeLibro));
         return Retorno.ok();
     }
 
     
-//1. Si el ISBN es vacío o null. 
-//2. Si no existe un libro con ese ISBN. 
-//3. Si no existe un estudiante con ese nombre. 
-//4. Si el stock de ese libro es mayor que cero. 
+
     @Override
     public Retorno reservarLibro(String ISBN, int numero) {
         if (ISBN == "" || ISBN == null) return Retorno.error1();
@@ -130,9 +127,22 @@ public class Sistema implements IObligatorio {
         return Retorno.ok();        
     }
 
+    
+//1. Si el ISBN es vacío o null. 
+//2. Si no existe un libro con ese ISBN. 
+//3. Si no existe un estudiante con ese número. 
+//4. Si no existe un préstamo activo de ese libro para ese estudiante. 
     @Override
     public Retorno devolverLibro(String ISBN, int numero) {
-        return Retorno.noImplementada();
+        if (ISBN == "" || ISBN == null) return Retorno.error1();        
+
+        Libro existeLibro = Libros.obtenerElemento(new Libro(ISBN));
+        if (existeLibro == null) return Retorno.error2();        
+
+        Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
+        if (existeEstudiante == null) return Retorno.error3();
+
+        return existeEstudiante.devolverPrestamo(existeLibro) ? Retorno.ok() : Retorno.error4();
     }
 
     @Override

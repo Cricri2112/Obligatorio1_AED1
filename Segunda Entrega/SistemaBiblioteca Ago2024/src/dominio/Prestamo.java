@@ -39,7 +39,11 @@ public class Prestamo implements Comparable<Prestamo> {
 
     @Override
     public int compareTo(Prestamo o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         return this.estudiante.getNumero() < o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == -1
+                ? -1
+                : this.estudiante.getNumero() == o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == 0
+                    ? 0
+                    : 1;
     }
 //    
 //    public String toString(){
