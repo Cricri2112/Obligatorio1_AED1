@@ -53,10 +53,10 @@ public class Sistema implements IObligatorio {
     public Retorno eliminarEstudiante(int numero) {
         if(numero <=0 || numero > 500000) return Retorno.error1();
         
-        Estudiante estudiante = (Estudiante) Estudiantes.obtenerElemento(new Estudiante(null, null, numero));
+        Estudiante estudiante = (Estudiante) Estudiantes.obtenerElemento(new Estudiante(numero));
         if(estudiante== null) return Retorno.error2();
         
-        if(estudiante.getPrestamos().cantElementos() > 0) return Retorno.error3();
+        if(estudiante.cantPrestamosActivos() > 0) return Retorno.error3();
         
         Estudiantes.borrarElemento(estudiante);
         return Retorno.ok();
@@ -66,7 +66,7 @@ public class Sistema implements IObligatorio {
     public Retorno agregarLibro(String nombre, String ISBN, String categoría, int cantidad) {
         if(nombre == null || ISBN == null || categoría == null|| nombre == "" || ISBN == "" || categoría == "") return Retorno.error1();
         
-        if(cantidad <=0) return Retorno.error3();
+        if (cantidad <= 0) return Retorno.error3();
         
         Libro agregar = new Libro(nombre, ISBN, categoría, cantidad);
        
@@ -77,26 +77,44 @@ public class Sistema implements IObligatorio {
         return Retorno.ok();
     }
     
-        @Override
-    public Retorno eliminarLibro(String ISBN) {
+//------------------------------------------
+// Segunda entrega
+    
+
+    @Override
+    public Retorno prestarLibro(String ISBN, int numero) {
+        if(ISBN == "" || ISBN== null) return Retorno.error1();
+        
+        Libro existeLibro = Libros.obtenerElemento(new Libro(ISBN));
+        if(existeLibro== null)  return Retorno.error2();
+        
+        Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
+        if(existeEstudiante==null)return Retorno.error3();
+        
+        if(existeLibro.getDisponibles() == 0) return Retorno.error4();
+        
+        if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error5();
+        
+        existeEstudiante.agregarPrestamo(existeLibro); 
+        return Retorno.ok();
+    }
+
+    @Override
+    public Retorno reservarLibro(String ISBN, int numero) {
         return Retorno.noImplementada();
     }
 
     @Override
-    public Retorno prestarLibro(String ISBN, int numero) {
-         return Retorno.noImplementada();
-    }
-
-   @Override
-    public Retorno reservarLibro(String ISBN, int numero) {
-         return Retorno.noImplementada();
-    }
-    
-    @Override
     public Retorno devolverLibro(String ISBN, int numero) {
-         return Retorno.noImplementada();
+        return Retorno.noImplementada();
     }
 
+    @Override
+    public Retorno eliminarLibro(String ISBN) {
+        return Retorno.noImplementada();
+    }
+//-----------------------------------------------
+    
     @Override
     public Retorno listarEstudiantes() {
         Retorno res = new Retorno(Retorno.Resultado.OK);
@@ -119,33 +137,30 @@ public class Sistema implements IObligatorio {
         return res;
     }
 
+//------------------------------------------------------
+// Segunda entrega
     @Override
     public Retorno listarPrestamos(int numero) {
-           return Retorno.noImplementada();
+        return Retorno.noImplementada();
     }
 
     @Override
     public Retorno librosMasPrestados() {
-             return Retorno.noImplementada();
+        return Retorno.noImplementada();
     }
 
     @Override
     public Retorno deshacerEliminaciones(int n) {
-             return Retorno.noImplementada();
+        return Retorno.noImplementada();
     }
 
     @Override
     public Retorno cantidadPrestamosActivos(String ISBN) {
-           return Retorno.noImplementada();
+        return Retorno.noImplementada();
     }
 
     @Override
     public Retorno prestamosXCategoría() {
-           return Retorno.noImplementada();
+        return Retorno.noImplementada();
     }
-
-   
-
-
-
 }

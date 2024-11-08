@@ -7,33 +7,45 @@ public class Estudiante implements Comparable<Estudiante> {
     private String nombre;
     private String apellido;
     private int numero;
-    private ListaDoble<Prestamo> prestamos = new ListaDoble<Prestamo>() {};
+    private ListaDoblePrestamo prestamos = new ListaDoblePrestamo() {};
     
     public Estudiante(String nombre, String apellido, int numero) {
         this.setNombre(nombre);
         this.setApellido(apellido);
         this.setNumero(numero);
     }
+    
+   public Estudiante( int numero) {
+        this.setNombre(null);
+        this.setApellido(null);
+        this.setNumero(numero);
+    }
 
-    public ListaDoble<Prestamo> getPrestamos() {
+    public ListaDoblePrestamo getPrestamos() {
         return prestamos;
     }
     
+    public int cantPrestamosActivos() {
+        return prestamos.cantActivos();
+    }
+    
     public Boolean agregarPrestamo(Libro libro) {
-        if(this.prestamos.cantElementos() > 7) {
+        if(this.prestamos.cantActivos()> 7) {
             return false;
         }
         
         Prestamo nuevoPrestamo = new Prestamo(this, libro);
         
         // Chequeo si ya tiene un préstamo activo de ese libro
-        Prestamo buscar = this.prestamos.obtenerElemento(nuevoPrestamo);
-        if(buscar != null) {
-            return false;
-        }
+        if(yaTienePrestamoActivo(libro.getISBN())) return false;
         
         this.prestamos.agregarInicio(nuevoPrestamo);
+        libro.restarDisponibles();
         return true;
+    }
+    
+    public boolean yaTienePrestamoActivo (String ISBN) {
+        return prestamos.tienePrestamoActivo(ISBN);
     }
     
     public Boolean devolverPrestamo(Prestamo prestamo) {
@@ -44,7 +56,7 @@ public class Estudiante implements Comparable<Estudiante> {
         }
         
         buscar.setActivo(false);
-        this.prestamos.borrarElemento(buscar);
+
         return true;
     }
 
@@ -90,6 +102,4 @@ public class Estudiante implements Comparable<Estudiante> {
         return  this.numero == comparar.numero;
                    
     }
-    
-    
 }

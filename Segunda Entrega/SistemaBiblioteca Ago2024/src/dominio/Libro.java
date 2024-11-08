@@ -1,10 +1,13 @@
 package dominio;
 
+import Tads.ListaDoble;
+
 public class Libro implements Comparable<Libro> {
     
     private String nombre;
     private String ISBN;
     private String categoria;
+    private ListaDoble<Prestamo> prestamos = new ListaDoble<Prestamo>() {};
     private int cantidad;
     private int disponibles;
     
@@ -14,6 +17,14 @@ public class Libro implements Comparable<Libro> {
         this.setCategoria(categoria);
         this.setCantidad(cantidad);
         this.disponibles = cantidad;
+    }
+    
+    public Libro(String ISBN){
+        this.setISBN(ISBN);
+        this.setNombre(null);
+        this.setCategoria(null);
+        this.setCantidad(0);
+        this.disponibles = 0;
     }
 
     public String getNombre(){
@@ -45,9 +56,19 @@ public class Libro implements Comparable<Libro> {
         return disponibles;
     }
 
-    public void setDisponibles(int disponibles) {
-        this.disponibles = disponibles;
+    public void restarDisponibles() {
+        if(disponibles >0) this.disponibles--;
     }
+
+    public ListaDoble<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(ListaDoble<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+    
+
 
     @Override
     public int compareTo(Libro o) {
