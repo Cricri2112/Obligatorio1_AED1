@@ -239,9 +239,7 @@ public class IObligatorioTest {
         Retorno r6 = miSistema.prestarLibro("ISBN2", 1001);
         assertEquals(Retorno.error4().resultado, r6.resultado);
     }
-
-    //5. Si ya existe un préstamo activo de ese libro para ese estudiante o si ya tiene 8 
-//préstamos activos. 
+ 
     @Test
     public void testPrestarLibroError5() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
@@ -273,4 +271,55 @@ public class IObligatorioTest {
 
     }
 
+    @Test
+    public void testReservarLibroOk() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r = miSistema.reservarLibro("ISBN2", 1001);
+        assertEquals(Retorno.ok().resultado, r.resultado);
+//        System.out.println(miSistema.getPrestamos());
+//        System.out.println(miSistema.getLibros().obtenerElemento(new Libro("ISBN2")).mostrarReservas());
+    }
+
+    @Test
+    public void testReservarLibroError1() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r1 = miSistema.reservarLibro("", 1001);
+        assertEquals(Retorno.error1().resultado, r1.resultado);
+        Retorno r2 = miSistema.reservarLibro(null, 1001);
+        assertEquals(Retorno.error1().resultado, r2.resultado);
+    }
+
+    @Test
+    public void testReservarLibroError2() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r3 = miSistema.reservarLibro("ISBN3", 1001);
+        assertEquals(Retorno.error2().resultado, r3.resultado);
+    }
+
+    @Test
+    public void testReservarLibroError3() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        Retorno r4 = miSistema.reservarLibro("ISBN2", 1002);
+        assertEquals(Retorno.error3().resultado, r4.resultado);
+    }
+
+    @Test
+    public void testReservarLibroError4() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        Retorno r5 = miSistema.reservarLibro("ISBN2", 1001);
+        assertEquals(Retorno.error4().resultado, r5.resultado);
+    }
 }

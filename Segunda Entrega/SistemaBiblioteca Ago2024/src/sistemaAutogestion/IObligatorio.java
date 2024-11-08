@@ -1,12 +1,15 @@
 package sistemaAutogestion;
 
+import dominio.ListaDobleLibro;
+
 
 public interface IObligatorio {
     
     /*
     **************** REGISTROS **************************************
     */
-    
+    public String getPrestamos();
+    public ListaDobleLibro getLibros();
     //pre: No existe un sistema     
     //post: Crea las listas (de Estudiante, Libro) que se van a utilizar en el sistema.
     public Retorno crearSistemaDeGestion();

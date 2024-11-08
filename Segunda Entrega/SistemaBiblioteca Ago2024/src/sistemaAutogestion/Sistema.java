@@ -4,22 +4,31 @@ import Tads.ListaDoble;
 import dominio.Estudiante;
 import dominio.Libro;
 import dominio.ListaDobleLibro;
+import dominio.ListaDoblePrestamo;
 import dominio.Prestamo;
 
 public class Sistema implements IObligatorio {
     public ListaDobleLibro Libros;
     public ListaDoble<Estudiante> Estudiantes;
-    public ListaDoble<Prestamo> Prestamos;
+    public ListaDoblePrestamo Prestamos;
     
     public Sistema() {
         crearSistemaDeGestion();
+    }
+     @Override
+    public String getPrestamos() {
+        return Prestamos.mostrar();
+    }
+      @Override
+    public ListaDobleLibro getLibros() {
+        return Libros;
     }
     
     @Override
     public Retorno crearSistemaDeGestion() {
         Libros = new ListaDobleLibro() {};
         Estudiantes = new ListaDoble() {};
-        Prestamos = new ListaDoble() {};
+        Prestamos = new ListaDoblePrestamo() {};
         return Retorno.ok();
     }
 
@@ -96,12 +105,29 @@ public class Sistema implements IObligatorio {
         if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error5();
         
         existeEstudiante.agregarPrestamo(existeLibro); 
+        Prestamos.agregarInicio(new Prestamo(existeEstudiante, existeLibro));
         return Retorno.ok();
     }
 
+    
+//1. Si el ISBN es vacío o null. 
+//2. Si no existe un libro con ese ISBN. 
+//3. Si no existe un estudiante con ese nombre. 
+//4. Si el stock de ese libro es mayor que cero. 
     @Override
     public Retorno reservarLibro(String ISBN, int numero) {
-        return Retorno.noImplementada();
+        if (ISBN == "" || ISBN == null) return Retorno.error1();
+
+        Libro existeLibro = Libros.obtenerElemento(new Libro(ISBN));
+        if (existeLibro == null) return Retorno.error2();
+
+        Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
+        if (existeEstudiante == null) return Retorno.error3();
+       
+        if(existeLibro.getDisponibles() > 0) return Retorno.error4();
+        
+        existeEstudiante.agregarPrestamo(existeLibro);
+        return Retorno.ok();        
     }
 
     @Override

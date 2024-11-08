@@ -58,5 +58,10 @@ public class Prestamo implements Comparable<Prestamo> {
         );
     }
     
+    public String toString(){
+        return "[libro: " + libro.toString() + " Estudiante: " +  estudiante.toString() + "]";
+    }
+    
+        
     
 }

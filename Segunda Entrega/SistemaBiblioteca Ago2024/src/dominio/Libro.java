@@ -1,6 +1,7 @@
 package dominio;
 
 import Tads.ListaDoble;
+import Tads.Cola;
 
 public class Libro implements Comparable<Libro> {
     
@@ -8,6 +9,7 @@ public class Libro implements Comparable<Libro> {
     private String ISBN;
     private String categoria;
     private ListaDoble<Prestamo> prestamos = new ListaDoble<Prestamo>() {};
+    private Cola<Estudiante> reservas = new Cola(){};
     private int cantidad;
     private int disponibles;
     
@@ -64,11 +66,22 @@ public class Libro implements Comparable<Libro> {
         return prestamos;
     }
 
-    public void setPrestamos(ListaDoble<Prestamo> prestamos) {
-        this.prestamos = prestamos;
+    public void agregarPrestamo(Prestamo prestamo) {
+        this.prestamos.agregarInicio(prestamo);
     }
     
 
+    public boolean prestar(Estudiante estudiante) {
+        //Se da por asumido que el estudiante tiene menos de 8 préstamos activos.
+        //La clase estudiante tiene un metodo que controla la cantidad de préstamos activos.
+
+        if (disponibles > 0) {
+            disponibles--;
+            return true;
+        } else reservas.encolar(estudiante);      
+        return false;
+
+    }
 
     @Override
     public int compareTo(Libro o) {
@@ -83,6 +96,9 @@ public class Libro implements Comparable<Libro> {
         return this.getNombre() + "#" + this.getISBN()+ "#" + this.getCategoria();
     }
     
+    public String mostrarReservas() {
+        return reservas.mostrar();
+    }
     @Override
     public boolean equals(Object o) {
         if(o == null) return false;

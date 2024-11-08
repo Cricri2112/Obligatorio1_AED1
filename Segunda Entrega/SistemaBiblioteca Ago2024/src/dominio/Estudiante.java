@@ -38,10 +38,12 @@ public class Estudiante implements Comparable<Estudiante> {
         
         // Chequeo si ya tiene un préstamo activo de ese libro
         if(yaTienePrestamoActivo(libro.getISBN())) return false;
-        
-        this.prestamos.agregarInicio(nuevoPrestamo);
-        libro.restarDisponibles();
-        return true;
+        if (libro.prestar(this)) {
+            this.prestamos.agregarInicio(nuevoPrestamo);
+            libro.agregarPrestamo(nuevoPrestamo);
+            return true;
+        }
+        return false;
     }
     
     public boolean yaTienePrestamoActivo (String ISBN) {
