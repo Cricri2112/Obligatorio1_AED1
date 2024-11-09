@@ -37,18 +37,20 @@ public class Prestamo implements Comparable<Prestamo> {
         this.activo = activo;
     }
 
-    @Override
-    public int compareTo(Prestamo o) {
-//         return this.estudiante.getNumero() < o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == -1
+    //         return this.estudiante.getNumero() < o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == -1
 //                ? -1
 //                : this.estudiante.getNumero() == o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == 0
 //                    ? 0
 //                    : 1;
-            return this.fecha.compareTo(o.getFecha()) == -1
-                ? -1
-                : this.fecha.compareTo(o.getFecha()) == 0
-                    ? 0
-                    : 1;
+    
+    @Override
+    public int compareTo(Prestamo o) {
+
+        return this.fecha.compareTo(o.getFecha()) == 1
+            ? 1
+            : this.fecha.compareTo(o.getFecha()) == 0
+                ? 0
+                : -1;
                     
     }
 //    

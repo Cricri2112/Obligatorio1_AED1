@@ -32,42 +32,38 @@ public class ListaDoblePrestamo extends ListaDoble<Prestamo> {
     
     @Override 
     public void agregarOrdenado(Prestamo prestamo) {
-        if (this.esVacia() || this.getInicio().getValor().compareTo(prestamo) >= 1) {
-            this.agregarInicio(prestamo);
-        } else {
-
-            if (this.getFin().getValor().compareTo(prestamo) <= 0) {
-                this.agregarFinal(prestamo);
-            } else {
-                NodoDoble<Prestamo> actual = this.getInicio();
-                NodoDoble<Prestamo> agregar = new NodoDoble(prestamo);
-                boolean agregado = false;
-
-                while (actual != null && !agregado) {
-                    // actual < agregar
-                    if (actual.getValor().compareTo(agregar.getValor()) == -1) {
-                        agregar.setSiguiente(actual);
-                        agregar.setAnterior(actual.getAnterior());
-                        agregar.getAnterior().setSiguiente(agregar);
-                        agregar.getSiguiente().setAnterior(agregar);
-                        this.setCantidadNodos(this.cantElementos()+1);
-                        agregado = true;
-                    }
-                    actual = actual.getSiguiente();
+        if(esVacia() || getInicio().getValor().compareTo(prestamo) <= 0) {
+            agregarInicio(prestamo);
+        }
+        else if(getFin().getValor().compareTo(prestamo) >= 0) {
+            agregarFinal(prestamo);
+        }
+        else {
+            NodoDoble<Prestamo> aux = getInicio();
+            boolean agregado = false;
+            while(aux != null && !agregado) {
+                if(aux.getValor().compareTo(prestamo) <= 0) {
+                    NodoDoble<Prestamo> nuevo = new NodoDoble(prestamo, aux.getAnterior(), aux);
+                    aux.getAnterior().setSiguiente(nuevo);
+                    aux.setAnterior(nuevo);
+                    agregado = true;
                 }
+                
+                aux = aux.getSiguiente();
             }
         }
-    }  
+    }
     
     @Override
     public Prestamo obtenerElemento(Prestamo p) {
         if(this.esVacia()) return null;
         else {
             NodoDoble<Prestamo> actual = this.getInicio();
-            Boolean sigue = true;
             
-            while(actual!= null && sigue){
+            while(actual!= null){
                 if(actual.equals(p)) return actual.getValor();
+                
+                actual = actual.getSiguiente();
             }
 
             return null;

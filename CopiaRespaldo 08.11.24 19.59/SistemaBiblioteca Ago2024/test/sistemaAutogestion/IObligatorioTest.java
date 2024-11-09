@@ -422,17 +422,18 @@ public class IObligatorioTest {
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
         miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria2", 15);
         miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria3", 23);
+        
         miSistema.prestarLibro("ISBN2", 1000);
         miSistema.prestarLibro("ISBN1", 1000);
         miSistema.prestarLibro("ISBN4", 1000);
+        
         Estudiante e = miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000));
         e.devolverPrestamo(new Libro("ISBN2"));
+        
         Retorno r = miSistema.listarPrestamos(1000);
-//        System.out.println(miSistema.listarPrestamos(1000));
-//        System.out.println(miSistema.mostrarPrestamos());
         assertEquals(Retorno.ok().resultado, r.resultado);
-        //nombreLibro1#ISBN1#categoria1#estado|nombreLibro2#ISBN2#categoria2#estado 
-        assertEquals("NombreLibro2#ISBN2#Categoria1#false|NombreLibro1#ISBN1#Categoria3#true|NombreLibro4#ISBN4#Categoria2#true", r.valorString);
+        
+        assertEquals("NombreLibro4#ISBN4#Categoria2#true|NombreLibro1#ISBN1#Categoria3#true|NombreLibro2#ISBN2#Categoria1#false", r.valorString);
     }
     
     @Test
