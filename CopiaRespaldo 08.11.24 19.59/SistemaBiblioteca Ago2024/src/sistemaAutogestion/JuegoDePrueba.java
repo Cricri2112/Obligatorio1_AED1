@@ -2,6 +2,7 @@ package sistemaAutogestion;
 
 import dominio.Estudiante;
 import dominio.Libro;
+import dominio.Prestamo;
 
 public class JuegoDePrueba {
     
@@ -92,7 +93,7 @@ public class JuegoDePrueba {
         //Manejar caso de estudiante con préstamo activo
         Libro libro = sis.Libros.obtenerElemento(new Libro(null, "ISBN10", null, 0));
         Estudiante estudiante = sis.Estudiantes.obtenerElemento(e1);
-        estudiante.agregarPrestamo(libro);
+        estudiante.agregarPrestamo(new Prestamo(estudiante, libro));
         System.out.println("Intentar eliminar estudiante con préstamo activo: " + sis.eliminarEstudiante(1111).resultado);
     }
 }

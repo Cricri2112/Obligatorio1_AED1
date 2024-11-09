@@ -114,8 +114,9 @@ public class Sistema implements IObligatorio {
         
         if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error5();
         
-        existeEstudiante.agregarPrestamo(existeLibro); 
-        Prestamos.agregarOrdenado(new Prestamo(existeEstudiante, existeLibro));
+        Prestamo nuevo = new Prestamo(existeEstudiante, existeLibro);
+        existeEstudiante.agregarPrestamo(nuevo); 
+        Prestamos.agregarOrdenado(nuevo);
         
         LibrosOrdenPrestados.borrarElemento(existeLibro);
         LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro);
@@ -134,7 +135,9 @@ public class Sistema implements IObligatorio {
        
         if(existeLibro.getDisponibles() > 0) return Retorno.error4();
         
-        existeEstudiante.agregarPrestamo(existeLibro);
+        Prestamo nuevoPrestamo = new Prestamo(existeEstudiante, existeLibro);
+        existeEstudiante.agregarPrestamo(nuevoPrestamo);
+        System.out.println(existeLibro.getReservas().mostrar());
         return Retorno.ok();        
     }
 
@@ -147,16 +150,8 @@ public class Sistema implements IObligatorio {
 
         Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
         if (existeEstudiante == null) return Retorno.error3();
-
         
-        boolean devolvio = existeEstudiante.devolverPrestamo(existeLibro);
-        if(devolvio) {
-            LibrosOrdenPrestados.borrarElemento(existeLibro);
-            LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro); 
-            return Retorno.ok();
-        }   
-        
-        return Retorno.error4();
+        return existeEstudiante.devolverPrestamo(existeLibro) ? Retorno.ok() : Retorno.error4();
     }
             
 //1.- Si el ISBN es vacío o null.

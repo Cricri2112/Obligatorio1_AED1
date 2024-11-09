@@ -58,4 +58,19 @@ public class ListaDoblePrestamo extends ListaDoble<Prestamo> {
             }
         }
     }  
+    
+    @Override
+    public Prestamo obtenerElemento(Prestamo p) {
+        if(this.esVacia()) return null;
+        else {
+            NodoDoble<Prestamo> actual = this.getInicio();
+            Boolean sigue = true;
+            
+            while(actual!= null && sigue){
+                if(actual.equals(p)) return actual.getValor();
+            }
+
+            return null;
+        }
+    }
 }

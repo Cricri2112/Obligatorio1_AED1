@@ -58,6 +58,10 @@ public class Libro implements Comparable<Libro> {
     public int getDisponibles() {
         return disponibles;
     }
+    
+    public Cola getReservas() {
+        return reservas;
+    }
 
     public void restarDisponibles() {
         if(disponibles >0) this.disponibles--;
@@ -69,30 +73,29 @@ public class Libro implements Comparable<Libro> {
 
     public void agregarPrestamo(Prestamo prestamo) {
         this.prestamos.agregarOrdenado(prestamo);
+        disponibles--;
     }
     
-
-    public boolean prestar(Estudiante estudiante) {
-        //Se da por asumido que el estudiante tiene menos de 8 préstamos activos.
-        //La clase estudiante tiene un metodo que controla la cantidad de préstamos activos.
-
-        if (disponibles > 0) {
-            this.prestamos.agregarOrdenado(new Prestamo(estudiante, this));
-            disponibles--;
-            return true;
-        } else reservas.encolar(estudiante);      
-        return false;
-
+    public boolean tieneDisponibles() {
+        return disponibles > 0;
     }
     
-    public void devolver () {
+    public void agregarColaEspera(Estudiante estudiante) {
+        reservas.encolar(estudiante); 
+    }
+    
+    public Prestamo devolver() {
         disponibles++;
         
-        NodoSimple<Estudiante> aux = reservas.getInicio();
-        if(aux!= null) {
-            aux.getValor().agregarPrestamo(this);
+         if(!reservas.esVacia()) {
+            Estudiante primeroEnCola = reservas.getInicio().getValor();
+            Prestamo p = new Prestamo(primeroEnCola, this);
+            primeroEnCola.agregarPrestamo(p);
             reservas.desencolar();
+            return p;
         }
+         
+         return null;
     }
 
     @Override

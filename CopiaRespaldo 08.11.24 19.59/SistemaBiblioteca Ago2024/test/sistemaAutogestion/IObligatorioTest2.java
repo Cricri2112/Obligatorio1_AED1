@@ -146,7 +146,7 @@ public class IObligatorioTest2 {
         
         Libro libro = (Libro) sistema.Libros.obtenerElemento(new Libro(null, "ISBN1", null, 0));
         
-        estudiante.agregarPrestamo(libro);
+        estudiante.agregarPrestamo(new Prestamo(estudiante, libro));
         
         Retorno r5 = sistema.eliminarEstudiante(1111);
         assertEquals(Retorno.error3().resultado, r5.resultado);
