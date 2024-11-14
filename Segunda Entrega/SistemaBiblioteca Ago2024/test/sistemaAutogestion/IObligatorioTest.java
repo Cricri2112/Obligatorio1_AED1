@@ -122,7 +122,7 @@ public class IObligatorioTest {
         sistema.agregarLibro("NombreLibro", "ISBN", "Categoria", 150);
         Estudiante estudiante = (Estudiante) sistema.Estudiantes.obtenerElemento(new Estudiante(1111));
         Libro libro = (Libro) sistema.Libros.obtenerElemento(new Libro("ISBN"));
-        estudiante.agregarPrestamo(libro);
+        estudiante.agregarPrestamo(new Prestamo(estudiante, libro));
         Retorno r5 = sistema.eliminarEstudiante(1111);
         assertEquals(Retorno.error3().resultado, r5.resultado);
     }
@@ -218,36 +218,45 @@ public class IObligatorioTest {
     public void testPrestarLibroError2() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 250);
-        Retorno r4 = miSistema.prestarLibro("ISBN1", 1000);
-        assertEquals(Retorno.error2().resultado, r4.resultado);
+        Retorno r3 = miSistema.prestarLibro("ISBN1", 1000);
+        assertEquals(Retorno.error2().resultado, r3.resultado);
     }
 
-    @Test
+     @Test
     public void testPrestarLibroError3() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 250);
-        Retorno r5 = miSistema.prestarLibro("ISBN2", 100);
+        Retorno r4 = miSistema.prestarLibro("ISBN2", 0);
+        assertEquals(Retorno.error3().resultado, r4.resultado);
+        Retorno r5 = miSistema.prestarLibro("ISBN2", 500001);
         assertEquals(Retorno.error3().resultado, r5.resultado);
     }
-
     @Test
     public void testPrestarLibroError4() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
-        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
-        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
-        miSistema.prestarLibro("ISBN2", 1000);
-        Retorno r6 = miSistema.prestarLibro("ISBN2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 250);
+        Retorno r6 = miSistema.prestarLibro("ISBN2", 100);
         assertEquals(Retorno.error4().resultado, r6.resultado);
     }
- 
+
     @Test
     public void testPrestarLibroError5() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r7 = miSistema.prestarLibro("ISBN2", 1001);
+        assertEquals(Retorno.error5().resultado, r7.resultado);
+    }
+ 
+    @Test
+    public void testPrestarLibroError6() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 2);
         miSistema.prestarLibro("ISBN2", 1000);
-        Retorno r7 = miSistema.prestarLibro("ISBN2", 1000);
-        assertEquals(Retorno.error5().resultado, r7.resultado);
+        Retorno r8 = miSistema.prestarLibro("ISBN2", 1000);
+        assertEquals(Retorno.error6().resultado, r8.resultado);
 
         miSistema.agregarLibro("NombreLibro3", "ISBN3", "Categoria1", 100);
         miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria2", 150);
@@ -266,8 +275,8 @@ public class IObligatorioTest {
         miSistema.prestarLibro("ISBN8", 1001);
         miSistema.prestarLibro("ISBN9", 1001);
         miSistema.prestarLibro("ISBN10", 1001);
-        Retorno r8 = miSistema.prestarLibro("ISBN11", 1001);
-        assertEquals(Retorno.error5().resultado, r8.resultado);
+        Retorno r9 = miSistema.prestarLibro("ISBN11", 1001);
+        assertEquals(Retorno.error6().resultado, r9.resultado);
 
     }
 
@@ -304,23 +313,33 @@ public class IObligatorioTest {
         Retorno r3 = miSistema.reservarLibro("ISBN3", 1001);
         assertEquals(Retorno.error2().resultado, r3.resultado);
     }
-
     @Test
     public void testReservarLibroError3() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
-        Retorno r4 = miSistema.reservarLibro("ISBN2", 1002);
+        Retorno r4 = miSistema.reservarLibro("ISBN2", 0);
         assertEquals(Retorno.error3().resultado, r4.resultado);
+        Retorno r5 = miSistema.reservarLibro("ISBN2", 500001);
+        assertEquals(Retorno.error3().resultado, r5.resultado);
     }
 
     @Test
     public void testReservarLibroError4() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        Retorno r6 = miSistema.reservarLibro("ISBN2", 1002);
+        assertEquals(Retorno.error4().resultado, r6.resultado);
+    }
+    
+    @Test
+    public void testReservarLibroError5() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
-        Retorno r5 = miSistema.reservarLibro("ISBN2", 1001);
-        assertEquals(Retorno.error4().resultado, r5.resultado);
+        Retorno r7 = miSistema.reservarLibro("ISBN2", 1001);
+        assertEquals(Retorno.error5().resultado, r7.resultado);
     }
     
     @Test
@@ -330,12 +349,12 @@ public class IObligatorioTest {
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
         miSistema.prestarLibro("ISBN2", 1000);
         
-        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
-        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
+        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
+        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
         Retorno r = miSistema.devolverLibro("ISBN2", 1000);
         
-        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
-        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
+        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
+        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
         assertEquals(Retorno.ok().resultado, r.resultado);
     }
 
@@ -373,18 +392,29 @@ public class IObligatorioTest {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
-        Retorno r4 = miSistema.devolverLibro("ISBN2", 1002);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r4 = miSistema.devolverLibro("ISBN3", 0);
         assertEquals(Retorno.error3().resultado, r4.resultado);
+        Retorno r5 = miSistema.devolverLibro("ISBN3", 500001);
+        assertEquals(Retorno.error3().resultado, r5.resultado);
     }
-
-//4. Si no existe un préstamo activo de ese libro para ese estudiante. 
     @Test
     public void testDevolverLibroError4() {
         miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
         miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
+        Retorno r6 = miSistema.devolverLibro("ISBN2", 1002);
+        assertEquals(Retorno.error4().resultado, r6.resultado);
+    }
+
+//4. Si no existe un préstamo activo de ese libro para ese estudiante. 
+    @Test
+    public void testDevolverLibroError5() {
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
-        Retorno r5 = miSistema.devolverLibro("ISBN2", 1001);
-        assertEquals(Retorno.error4().resultado, r5.resultado);
+        Retorno r7 = miSistema.devolverLibro("ISBN2", 1001);
+        assertEquals(Retorno.error5().resultado, r7.resultado);
     }
     
     @Test
@@ -422,22 +452,73 @@ public class IObligatorioTest {
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
         miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria2", 15);
         miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria3", 23);
+        
         miSistema.prestarLibro("ISBN2", 1000);
         miSistema.prestarLibro("ISBN1", 1000);
         miSistema.prestarLibro("ISBN4", 1000);
+        
         Estudiante e = miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000));
         e.devolverPrestamo(new Libro("ISBN2"));
+        
         Retorno r = miSistema.listarPrestamos(1000);
-        System.out.println(miSistema.listarPrestamos(1000));
-        System.out.println(miSistema.mostrarPrestamos());
         assertEquals(Retorno.ok().resultado, r.resultado);
-        //nombreLibro1#ISBN1#categoria1#estado|nombreLibro2#ISBN2#categoria2#estado 
+        
         assertEquals("NombreLibro4#ISBN4#Categoria2#true|NombreLibro1#ISBN1#Categoria3#true|NombreLibro2#ISBN2#Categoria1#false", r.valorString);
     }
     
     @Test
     public void testListarPrestamosError1(){
-        Retorno r1 = miSistema.listarPrestamos(1002);
+        Retorno r1 = miSistema.listarPrestamos(0);
+        assertEquals(Retorno.error1().resultado, r1.resultado);
+        Retorno r2 = miSistema.listarPrestamos(500001);
+        assertEquals(Retorno.error1().resultado, r2.resultado);
+    }
+    
+    @Test
+    public void testListarPrestamosError2(){
+        Retorno r2 = miSistema.listarPrestamos(1002);
+        assertEquals(Retorno.error2().resultado, r2.resultado);
+    }
+    
+    @Test
+    public void testLibrosMasPrestadosOk(){
+        Retorno r = miSistema.librosMasPrestados();
+        assertEquals(Retorno.ok().resultado, r.resultado);
+        assertEquals("nombreLibro1#ISBN1#Categoria1#2|nombreLibro2#ISBN2#Categoria2#3", r.valorString);
+    }
+    
+    @Test
+    public void testDeshacerEliminacionesOk(){
+        Retorno r = miSistema.deshacerEliminaciones(3);
+        assertEquals(Retorno.ok().resultado, r.resultado);
+        
+    }
+    
+    @Test
+    public void testDeshacerEliminacionesError1(){
+        Retorno r1 = miSistema.deshacerEliminaciones(0);
         assertEquals(Retorno.error1().resultado, r1.resultado);
     }
+    
+    @Test
+    public void testCantidadPrestamosActivosOk() {
+        Retorno r = miSistema.cantidadPrestamosActivos("ISBN1");
+        assertEquals(Retorno.ok().resultado, r.resultado);
+    }
+    
+    @Test
+    public void testCantidadPrestamosActivosError1() {
+        Retorno r1 = miSistema.cantidadPrestamosActivos("");
+        assertEquals(Retorno.error1().resultado, r1.resultado);
+        Retorno r2 = miSistema.cantidadPrestamosActivos(null);
+        assertEquals(Retorno.error1().resultado, r2.resultado);
+    }
+    
+    @Test
+    public void testPrestamosXCategoriaOk() {
+        Retorno r = miSistema.prestamosXCategoría();
+        assertEquals(Retorno.ok().resultado, r.resultado);
+    }
+    
+    
 }

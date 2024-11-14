@@ -29,38 +29,41 @@ public class Estudiante implements Comparable<Estudiante> {
         return prestamos.cantActivos();
     }
     
-    public Boolean agregarPrestamo(Libro libro) {
+    public Boolean agregarPrestamo(Prestamo prestamo) {
         if(this.prestamos.cantActivos()> 7) {
             return false;
         }
         
-        Prestamo nuevoPrestamo = new Prestamo(this, libro);
-        
-        // Chequeo si ya tiene un préstamo activo de ese libro
-        if(yaTienePrestamoActivo(libro.getISBN())) return false;
-        if (libro.prestar(this)) {
-            this.prestamos.agregarInicio(nuevoPrestamo);
+        Libro libroActual = prestamo.getLibro();
+        if(libroActual.tieneDisponibles()) {
             
-            return true;
+            if(yaTienePrestamoActivo(prestamo.getLibro().getISBN())) return false;
+            
+            else {
+                libroActual.agregarPrestamo(prestamo);
+                prestamos.agregarOrdenado(prestamo);
+                return true;
+            }
         }
-        return false;
+        else {
+            libroActual.agregarColaEspera(this);
+            return false;
+        }
     }
     
     public boolean yaTienePrestamoActivo (String ISBN) {
         return prestamos.tienePrestamoActivo(ISBN);
     }
     
-    public Boolean devolverPrestamo(Libro libro) {
-        
-        Prestamo buscar = this.prestamos.obtenerElemento(new Prestamo(this, libro));
+    public boolean devolverPrestamo(Libro libro) {
+        Prestamo buscar = prestamos.obtenerElemento(new Prestamo(this, libro));
         
         if( buscar == null || !buscar.getActivo()) {
             return false;
         }
         
+        libro.devolver();
         buscar.setActivo(false);
-        libro.devolver();        
-
         return true;
     }
 

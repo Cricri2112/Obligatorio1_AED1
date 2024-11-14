@@ -171,16 +171,13 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
             Boolean sigue = true;
             NodoDoble<T> res = null;
             while(actual!= null && sigue){
-                if(
-                    actual.getValor().equals(obj) ||
-                    actual.getValor().compareTo(obj) == 1 //Si se pasa corta, lista ordenada.
-                ) {
+                if(actual.getValor().equals(obj)) {
                     res = actual;
                     sigue = false;
                 }
-                else {
-                    actual = actual.getSiguiente();
-                }
+                //Si se pasa corta, lista ordenada.
+                else if (actual.getValor().compareTo(obj) == 1) sigue = false; 
+                else actual = actual.getSiguiente();
             }
             // Nunca debería ser null porque ya se pregunta si: 
             // this.menorPrimerMayorUltimo(nodo)
