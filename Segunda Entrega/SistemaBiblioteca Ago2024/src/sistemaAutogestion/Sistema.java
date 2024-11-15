@@ -1,6 +1,7 @@
 package sistemaAutogestion;
 
 import Tads.ListaDoble;
+import Tads.Pila;
 import dominio.Estudiante;
 import dominio.Libro;
 import dominio.ListaDobleLibro;
@@ -10,6 +11,7 @@ import dominio.Prestamo;
 public class Sistema implements IObligatorio {
     public ListaDobleLibro Libros;
     public ListaDobleLibro LibrosOrdenPrestados;
+    public Pila<Libro> LibrosEliminados;
     public ListaDoble<Estudiante> Estudiantes;
     public ListaDoblePrestamo Prestamos;
     
@@ -38,6 +40,7 @@ public class Sistema implements IObligatorio {
         Estudiantes = new ListaDoble() {};
         Prestamos = new ListaDoblePrestamo() {};
         LibrosOrdenPrestados = new ListaDobleLibro() {};
+        LibrosEliminados = new Pila<Libro>();
         return Retorno.ok();
     }
 
@@ -141,7 +144,7 @@ public class Sistema implements IObligatorio {
         
         Prestamo nuevoPrestamo = new Prestamo(existeEstudiante, existeLibro);
         existeEstudiante.agregarPrestamo(nuevoPrestamo);
-        System.out.println(existeLibro.getReservas().mostrar());
+        //System.out.println(existeLibro.getReservas().mostrar());
         return Retorno.ok();        
     }
 
@@ -169,8 +172,9 @@ public class Sistema implements IObligatorio {
         Libro existeLibro = Libros.obtenerElemento(new Libro(ISBN));
         if(existeLibro.getPrestamos().cantElementos() > 0) return Retorno.error2();
         
+        LibrosEliminados.apilar(existeLibro);
         Libros.borrarElemento(existeLibro);
-        LibrosOrdenPrestados.borrarElemento(existeLibro);
+        LibrosOrdenPrestados.borrarElemento(existeLibro);        
         return Retorno.ok();
     }
 //-----------------------------------------------
@@ -213,17 +217,45 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno librosMasPrestados() {
-        return Retorno.noImplementada();
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        res.valorString = LibrosOrdenPrestados.mostrarPrestados();
+        return res;
     }
 
     @Override
     public Retorno deshacerEliminaciones(int n) {
-        return Retorno.noImplementada();
+        Retorno res = new Retorno(Retorno.Resultado.OK);
+        res.valorString = "";
+        
+        if (n <= 0) return Retorno.error1();        
+        
+        if(LibrosEliminados.estaVacia()) res.valorString = "No hay libros eliminados";
+        else{
+            if(n > LibrosEliminados.cantidadNodos())  n = LibrosEliminados.cantidadNodos();
+            Libro libroDevuelto = LibrosEliminados.desapilar();
+            Libros.agregarOrdenado(libroDevuelto);
+            res.valorString = libroDevuelto.toString();
+            for (int i  = 2 ; i<= n ; i++){
+                libroDevuelto = LibrosEliminados.desapilar();
+                Libros.agregarOrdenado(libroDevuelto);
+                res.valorString+= "|" + libroDevuelto.toString();
+            }
+        }
+        
+        return res;
     }
 
     @Override
     public Retorno cantidadPrestamosActivos(String ISBN) {
-        return Retorno.noImplementada();
+        
+        if(ISBN == null || ISBN == "") return Retorno.error1();
+        
+        Retorno res = new Retorno(Retorno.Resultado.OK); 
+        
+        Libro libroBuscado = Libros.obtenerElemento(new Libro(ISBN));
+        if(libroBuscado != null) res.valorEntero = libroBuscado.cantPrestamosAct();
+        else res.valorEntero = -1;
+        return Retorno.ok();
     }
 
     @Override

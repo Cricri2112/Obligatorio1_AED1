@@ -8,8 +8,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author pesce
+ * @author 291950 Nicolás Giménez
+ * @author 317010 Cristian García
  */
 public class IObligatorioTest {
 
@@ -349,12 +349,12 @@ public class IObligatorioTest {
         miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 1);
         miSistema.prestarLibro("ISBN2", 1000);
         
-        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
-        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
+        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
+        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
         Retorno r = miSistema.devolverLibro("ISBN2", 1000);
         
-        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
-        System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
+        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().mostrar());
+        //System.out.println(miSistema.getEstudiantes().obtenerElemento(new Estudiante(1000)).getPrestamos().cantElementos());
         assertEquals(Retorno.ok().resultado, r.resultado);
     }
 
@@ -482,16 +482,36 @@ public class IObligatorioTest {
     
     @Test
     public void testLibrosMasPrestadosOk(){
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria2", 15);
+        miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria3", 23);
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarEstudiante("NomreEstudiante3", "ApellidoEstudiante3", 1002);
+        
+        miSistema.prestarLibro("ISBN2", 1000);
+        miSistema.prestarLibro("ISBN2", 1001);
+        miSistema.prestarLibro("ISBN4", 1000);
+        miSistema.prestarLibro("ISBN4", 1001);
+        miSistema.prestarLibro("ISBN1", 1001);
+        
+
         Retorno r = miSistema.librosMasPrestados();
         assertEquals(Retorno.ok().resultado, r.resultado);
-        assertEquals("nombreLibro1#ISBN1#Categoria1#2|nombreLibro2#ISBN2#Categoria2#3", r.valorString);
+        assertEquals("NombreLibro2#ISBN2#Categoria1#2|NombreLibro4#ISBN4#Categoria2#2|NombreLibro1#ISBN1#Categoria3#1", r.valorString);
     }
     
     @Test
     public void testDeshacerEliminacionesOk(){
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria2", 15);
+        miSistema.agregarLibro("NombreLibro1", "ISBN1", "Categoria3", 23);
+        miSistema.eliminarLibro("ISBN4");
+        miSistema.eliminarLibro("ISBN2");
+        
         Retorno r = miSistema.deshacerEliminaciones(3);
         assertEquals(Retorno.ok().resultado, r.resultado);
-        
+        assertEquals("NombreLibro2#ISBN2#Categoria1|NombreLibro4#ISBN4#Categoria2", r.valorString);        
     }
     
     @Test
@@ -502,7 +522,10 @@ public class IObligatorioTest {
     
     @Test
     public void testCantidadPrestamosActivosOk() {
-        Retorno r = miSistema.cantidadPrestamosActivos("ISBN1");
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria1", 30);
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.prestarLibro("ISBN2", 1000);
+        Retorno r = miSistema.cantidadPrestamosActivos("ISBN2");
         assertEquals(Retorno.ok().resultado, r.resultado);
     }
     

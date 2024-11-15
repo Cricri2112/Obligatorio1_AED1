@@ -111,6 +111,10 @@ public class Libro implements Comparable<Libro> {
         return this.getNombre() + "#" + this.getISBN()+ "#" + this.getCategoria();
     }
     
+    public String toStringConPrestHist(){
+        return this.getNombre() + "#" + this.getISBN()+ "#" + this.getCategoria() + "#" + this.cantPrestadosHist();
+    }
+    
     public String mostrarReservas() {
         return reservas.mostrar();
     }
@@ -124,6 +128,10 @@ public class Libro implements Comparable<Libro> {
     
     public int cantPrestadosHist(){
         return prestamos.cantElementos();
+    }
+    
+    public int cantPrestamosAct() {
+        return cantidad - disponibles;
     }
 
     

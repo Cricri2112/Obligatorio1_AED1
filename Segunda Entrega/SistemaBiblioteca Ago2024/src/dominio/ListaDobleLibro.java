@@ -35,20 +35,28 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
     }
     
     public void agregarOrdenadoPrestamos(Libro libro) {
-        if (this.esVacia() || this.getInicio().getValor().cantPrestadosHist() <= libro.cantPrestadosHist()) {
-            this.agregarInicio(libro);
-        } else {
-            if (this.getFin().getValor().cantPrestadosHist() >= libro.cantPrestadosHist()) {
-                this.agregarFinal(libro);
-            } else {
+        if (this.esVacia() || 
+           (this.getInicio().getValor().cantPrestadosHist() <= libro.cantPrestadosHist() &&
+            this.getInicio().getValor().compareTo(libro) == 1)
+        ) this.agregarInicio(libro);
+        
+        else {
+            if (this.getFin().getValor().cantPrestadosHist() >= libro.cantPrestadosHist() &&
+                this.getInicio().getValor().compareTo(libro) == -1
+            ) this.agregarFinal(libro);
+
+            else {
                 NodoDoble<Libro> actual = this.getInicio();
                 NodoDoble<Libro> agregar = new NodoDoble(libro);
                 boolean agregado = false;
 
-                while (actual != null && !agregado) {
+                while (actual.getSiguiente() != null && !agregado) {
                     // 
-                    if (actual.getValor().cantPrestadosHist() <= agregar.getValor().cantPrestadosHist()) {
-                       
+                    if (actual.getValor().cantPrestadosHist() <= agregar.getValor().cantPrestadosHist() || 
+                        (actual.getValor().cantPrestadosHist() == agregar.getValor().cantPrestadosHist() &&
+                         actual.getValor().compareTo(libro) == 1)
+                    )
+                    {
                         agregar.setSiguiente(actual);
                         agregar.setAnterior(actual.getAnterior());
                         agregar.getAnterior().setSiguiente(agregar);
@@ -61,6 +69,26 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
             }
         }
     }
+    
+     public String mostrarPrestados() {
+        if(this.esVacia()){
+            return "";
+        }
+        else 
+        {
+            NodoDoble<Libro> actual = this.getInicio();
+            return mostrarPrestadoRec(actual);
+        }
+    }
+    private String mostrarPrestadoRec(NodoDoble<Libro> nodo) {
+        
+        return nodo.getSiguiente() == null 
+                ? nodo.getValor().toStringConPrestHist() 
+                : nodo.getValor().toStringConPrestHist() +"|"+ mostrarPrestadoRec(nodo.getSiguiente());               
+        
+    }
+    
+    
     
     
 //    private void ordernarPorISBN(NodoDoble<Libro> nuevo, NodoDoble<Libro> actual){
