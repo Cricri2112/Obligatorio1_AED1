@@ -34,51 +34,50 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
         }
     }
     
+    
     public void agregarOrdenadoPrestamos(Libro libro) {
-        if(esVacia()) {
-            this.agregarInicio(libro);
-        }
-        
-        else {
-            NodoDoble<Libro> actual = this.getInicio();
-            NodoDoble<Libro> agregar = new NodoDoble(libro);
-            boolean agregado = false;
+    if (esVacia()) {
+        this.agregarInicio(libro); 
+    } else {
+        NodoDoble<Libro> actual = this.getInicio();
+        NodoDoble<Libro> agregar = new NodoDoble<>(libro);
+        boolean agregado = false;
 
-            while (actual != null && !agregado) {
-                
-                if (libro.cantPrestadosHist() >= actual.getValor().cantPrestadosHist()) {
-                    NodoDoble<Libro> nuevoAnterior = actual.getAnterior();
-                    NodoDoble<Libro> nuevoSiguiente = actual.getSiguiente();
-                    
-                    if(libro.cantPrestadosHist() > actual.getValor().cantPrestadosHist() ||
-                        (actual.getValor().cantPrestadosHist() == libro.cantPrestadosHist() && 
-                         libro.compareTo(actual.getValor()) == -1)
-                    ){
-                        agregar.setSiguiente(actual);
-                        agregar.setAnterior(nuevoAnterior);
-                        
-                        actual.setAnterior(agregar);
-                        actual.setSiguiente(nuevoSiguiente);
-                        if(nuevoAnterior == null) inicio = agregar;
-                        this.setCantidadNodos(this.cantElementos() + 1);
-                        agregado = true;
-                    }
-                    else {
-                        agregar.setAnterior(actual);
-                        agregar.setSiguiente(nuevoSiguiente);
-                        
-                        actual.setSiguiente(agregar);
-                        if(nuevoSiguiente == null) fin = agregar;
-                        this.setCantidadNodos(this.cantElementos() + 1);
-                        agregado = true;
-                    }
-                    
-                    
+        while (actual != null && !agregado) {
+            if (libro.cantPrestadosHist() > actual.getValor().cantPrestadosHist() ||
+                (libro.cantPrestadosHist() == actual.getValor().cantPrestadosHist() &&
+                 libro.compareTo(actual.getValor()) < 0)) {
+
+                if (actual.getAnterior() != null) {
+                    actual.getAnterior().setSiguiente(agregar);
+                } else {
+                    this.inicio = agregar;
                 }
-                actual = actual.getSiguiente();
+
+                agregar.setAnterior(actual.getAnterior());
+                agregar.setSiguiente(actual);
+
+                actual.setAnterior(agregar);
+
+                this.setCantidadNodos(this.cantElementos() + 1);
+                agregado = true;
             }
+
+            actual = actual.getSiguiente();
+        }
+
+        if (!agregado) {
+            NodoDoble<Libro> finActual = this.fin;
+
+            finActual.setSiguiente(agregar);
+            agregar.setAnterior(finActual);
+            this.fin = agregar;
+
+            this.setCantidadNodos(this.cantElementos() + 1);
         }
     }
+}
+
     
     /*
     
@@ -132,6 +131,7 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
         }
     */
     
+     
      public String mostrarPrestados() {
         if(this.esVacia()){
             return "";
