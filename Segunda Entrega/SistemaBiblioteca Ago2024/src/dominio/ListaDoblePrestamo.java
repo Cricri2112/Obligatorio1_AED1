@@ -69,4 +69,26 @@ public class ListaDoblePrestamo extends ListaDoble<Prestamo> {
             return null;
         }
     }
+    
+    public String mostrarPrestados(int n) {
+        if(this.esVacia()){
+            return "";
+        }
+        else 
+        {
+            String res = getInicio().getValor().getLibro().toStringConPrestHist();
+            NodoDoble<Prestamo> actual = getInicio().getSiguiente();
+            while(actual != null && n > 0) {
+                res += "|" + actual.getValor().getLibro().toStringConPrestHist();
+                
+                actual = actual.getSiguiente();
+                if(actual != null) {
+                    Libro libroActual = actual.getValor().getLibro();
+                    Libro libroAnterior = actual.getAnterior().getValor().getLibro();
+                    if(libroActual.getCantidadPrestHist() != libroAnterior.getCantidadPrestHist()) n--;
+                }
+            }
+            return res;
+        }
+    }
 }

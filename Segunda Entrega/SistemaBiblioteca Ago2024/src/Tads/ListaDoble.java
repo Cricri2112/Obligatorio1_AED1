@@ -4,7 +4,7 @@ package Tads;
 import Tads.NodoDoble;
 import Tads.IListaDoble;
 
-public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
+public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
     protected NodoDoble<T> inicio = null;
     protected NodoDoble<T> fin = null;
@@ -168,22 +168,22 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
         }
         else {
             NodoDoble<T> actual = this.getInicio();
-            Boolean sigue = true;
+            //Boolean sigue = true;
             NodoDoble<T> res = null;
-            while(actual!= null && sigue){
+            while(actual!= null /*&& sigue*/){
                 if(actual.getValor().equals(obj)) {
-                    res = actual;
-                    sigue = false;
+                    return actual.getValor();
                 }
                 //Si se pasa corta, lista ordenada.
-                else if (actual.getValor().compareTo(obj) == 1) sigue = false; 
+                else if (actual.getValor().compareTo(obj) == 1) return null; 
                 else actual = actual.getSiguiente();
             }
-            // Nunca debería ser null porque ya se pregunta si: 
-            // this.menorPrimerMayorUltimo(nodo)
-            return res != null
-                ? res.getValor()
-                : null;
+            return null;
+//            // Nunca debería ser null porque ya se pregunta si: 
+//            // this.menorPrimerMayorUltimo(nodo)
+//            return res != null
+//                ? res.getValor()
+//                : null;
         }
     }
 

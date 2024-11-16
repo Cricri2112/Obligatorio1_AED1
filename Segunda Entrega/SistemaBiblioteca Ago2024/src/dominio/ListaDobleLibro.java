@@ -132,23 +132,44 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
     */
     
      
-     public String mostrarPrestados() {
+     public String mostrarPrestados(int n) {
         if(this.esVacia()){
             return "";
         }
         else 
         {
-            NodoDoble<Libro> actual = this.getInicio();
-            return mostrarPrestadoRec(actual);
+            ListaDoble<Libro> listaRes = new ListaDoble();
+            NodoDoble<Libro> actual = getInicio();
+            //
+            
+            while(actual != null && n > 0) {
+                listaRes.agregarOrdenado(actual.getValor());
+                actual = actual.getSiguiente();
+                if(actual != null) {
+                    Libro libroActual = actual.getValor();
+                    Libro libroAnterior = actual.getAnterior().getValor();
+                    if(libroActual.getCantidadPrestHist() != libroAnterior.getCantidadPrestHist()) n--;
+                }
+            }
+            
+            String res = listaRes.getInicio().getValor().toStringConPrestHist();
+            
+            NodoDoble<Libro> actual2 = listaRes.getInicio().getSiguiente();
+            while(actual2 != null) {
+                res += "|" + actual2.getValor().toStringConPrestHist();
+                actual2 = actual2.getSiguiente();
+            }
+            
+            return res;
         }
     }
-    private String mostrarPrestadoRec(NodoDoble<Libro> nodo) {
-        
-        return nodo.getSiguiente() == null 
-                ? nodo.getValor().toStringConPrestHist() 
-                : nodo.getValor().toStringConPrestHist() +"|"+ mostrarPrestadoRec(nodo.getSiguiente());               
-        
-    }
+//    private String mostrarPrestadoRec(NodoDoble<Libro> nodo) {
+//        
+//        return nodo.getSiguiente() == null 
+//                ? nodo.getValor().toStringConPrestHist() 
+//                : nodo.getValor().toStringConPrestHist() +"|"+ mostrarPrestadoRec(nodo.getSiguiente());               
+//        
+//    }
     
     public Boolean borrarElementoCantPrest(Libro obj) {
         if (this.esVacia()) return false;
@@ -191,6 +212,27 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
             
             return false;
         }
+    }
+    
+    
+    public String obtenerReservadosPorCategoria() {
+        ListaDoble<CategoriaReservas> res = new ListaDoble();
+        NodoDoble<Libro> aux = getInicio();
+        while(aux != null) {
+            Libro libroAux = aux.getValor();
+            CategoriaReservas nuevo = new CategoriaReservas(libroAux.getCategoria(), libroAux.getCantidadReservas());
+            CategoriaReservas contiene = res.obtenerElemento(nuevo);
+            if(contiene != null) {
+                contiene.reservas = nuevo.reservas;
+            }
+            else {
+                res.agregarOrdenado(nuevo);
+            }
+            
+            aux = aux.getSiguiente();
+        }
+        
+        return res.mostrar();
     }
     
     

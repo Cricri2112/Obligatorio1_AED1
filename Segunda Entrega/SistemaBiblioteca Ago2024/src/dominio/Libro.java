@@ -62,9 +62,17 @@ public class Libro implements Comparable<Libro> {
     public Cola getReservas() {
         return reservas;
     }
+    
+    public int getCantidadReservas() {
+        return reservas.cantElementos();
+    }
 
     public void restarDisponibles() {
         if(disponibles >0) this.disponibles--;
+    }
+    
+    public int getCantidadPrestHist() {
+        return prestamos.cantElementos();
     }
 
     public ListaDoble<Prestamo> getPrestamos() {

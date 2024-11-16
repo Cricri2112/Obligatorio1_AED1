@@ -152,7 +152,7 @@ public class BIBLIOTECAMAIN {
         p.ver(s.listarPrestamos(2505).resultado, Retorno.Resultado.ERROR_2, "Error 2 no existe un estudiante con ese número");
 
         //3.5 Libros más prestados
-        p.ver(s.librosMasPrestados().resultado, Retorno.Resultado.OK, "Ok se listan libros en orden de más prestados");
+        p.ver(s.librosMasPrestados(3).resultado, Retorno.Resultado.OK, "Ok se listan libros en orden de más prestados");
 
         //3.6 Deshacer n eliminaciones
         System.out.println("Libros con eliminado " + s.listarLibros().valorString + "\n");

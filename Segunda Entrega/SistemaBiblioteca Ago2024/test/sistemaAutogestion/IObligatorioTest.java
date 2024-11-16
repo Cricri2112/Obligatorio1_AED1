@@ -477,16 +477,46 @@ public class IObligatorioTest {
         miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
         miSistema.agregarEstudiante("NomreEstudiante3", "ApellidoEstudiante3", 1002);
         
-        miSistema.prestarLibro("ISBN2", 1000);
-        miSistema.prestarLibro("ISBN3", 1000);        
-        miSistema.prestarLibro("ISBN4", 1000);
-        miSistema.prestarLibro("ISBN4", 1001);        
-        miSistema.prestarLibro("ISBN5", 1001);
-        miSistema.prestarLibro("ISBN2", 1001);        
+        miSistema.prestarLibro("ISBN2", 1000); //1
+        miSistema.prestarLibro("ISBN3", 1000); //1    
+        miSistema.prestarLibro("ISBN4", 1000); //1
+        miSistema.prestarLibro("ISBN4", 1001); //2    
+        miSistema.prestarLibro("ISBN5", 1001); //1
+        miSistema.prestarLibro("ISBN2", 1001); //2    
         
-        Retorno r = miSistema.librosMasPrestados();
+        Retorno r = miSistema.librosMasPrestados(2);
         assertEquals(Retorno.ok().resultado, r.resultado);
-        assertEquals("NombreLibro2#ISBN2#Categoria2#2|NombreLibro4#ISBN4#Categoria4#2|NombreLibro3#ISBN3#Categoria3#1|NombreLibro5#ISBN5#Categoria5#1", r.valorString);
+        assertEquals("NombreLibro2#ISBN2#Categoria2#2|NombreLibro3#ISBN3#Categoria3#1|NombreLibro4#ISBN4#Categoria4#2|NombreLibro5#ISBN5#Categoria5#1", r.valorString);
+    }
+    
+        @Test
+    public void testLibrosMasPrestadosOk2(){
+        miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria4", 15);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria2", 30);
+        miSistema.agregarLibro("NombreLibro3", "ISBN3", "Categoria3", 23);        
+        miSistema.agregarLibro("NombreLibro5", "ISBN5", "Categoria5", 23);
+        
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarEstudiante("NomreEstudiante3", "ApellidoEstudiante3", 1002);
+        
+        miSistema.prestarLibro("ISBN2", 1000); //1
+        miSistema.prestarLibro("ISBN3", 1000); //1    
+        miSistema.prestarLibro("ISBN4", 1000); //1
+        miSistema.prestarLibro("ISBN4", 1001); //2    
+        miSistema.prestarLibro("ISBN5", 1001); //1
+        miSistema.prestarLibro("ISBN2", 1001); //2    
+        miSistema.prestarLibro("ISBN2", 1002); //3
+        
+        Retorno r = miSistema.librosMasPrestados(2);
+        assertEquals(Retorno.ok().resultado, r.resultado);
+        assertEquals("NombreLibro2#ISBN2#Categoria2#3|NombreLibro4#ISBN4#Categoria4#2", r.valorString);
+    }
+    
+    @Test
+    public void testLibrosMasPrestadosError1() {
+        Retorno r = miSistema.librosMasPrestados(0);
+        assertEquals(Retorno.error1().resultado, r.resultado);
     }
     
     @Test
@@ -529,7 +559,27 @@ public class IObligatorioTest {
     
     @Test
     public void testPrestamosXCategoriaOk() {
+        miSistema.agregarLibro("NombreLibro4", "ISBN4", "Categoria4", 1);
+        miSistema.agregarLibro("NombreLibro2", "ISBN2", "Categoria2", 1);
+        miSistema.agregarLibro("NombreLibro3", "ISBN3", "Categoria3", 1);
+        
+        miSistema.agregarEstudiante("NomreEstudiante1", "ApellidoEstudiante1", 1000);
+        miSistema.agregarEstudiante("NomreEstudiante2", "ApellidoEstudiante2", 1001);
+        miSistema.agregarEstudiante("NomreEstudiante3", "ApellidoEstudiante3", 1002);
+        
+        miSistema.prestarLibro("ISBN2", 1000); //0
+        
+        miSistema.prestarLibro("ISBN3", 1000); //0     
+        miSistema.prestarLibro("ISBN4", 1000); //0
+        miSistema.prestarLibro("ISBN4", 1001); //1    
+        miSistema.prestarLibro("ISBN3", 1001); //1
+        miSistema.prestarLibro("ISBN2", 1001); //1
+        miSistema.prestarLibro("ISBN3", 1002); //2
+        miSistema.prestarLibro("ISBN2", 1002); //2
+        
         Retorno r = miSistema.prestamosXCategoría();
         assertEquals(Retorno.ok().resultado, r.resultado);
+        assertEquals("Categoria2#cantidad2|Categoria3#cantidad2|Categoria4#cantidad1", r.valorString);
     }    
+    //Formato: categoria1#cantidad1|categoría2#cantidad2
 }

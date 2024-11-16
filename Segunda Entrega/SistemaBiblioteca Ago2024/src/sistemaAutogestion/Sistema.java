@@ -118,12 +118,16 @@ public class Sistema implements IObligatorio {
         Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
         if(existeEstudiante==null)return Retorno.error4();
         
-        if(existeLibro.getDisponibles() == 0) return Retorno.error5();
-        
         if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error6();
         
         Prestamo nuevo = new Prestamo(existeEstudiante, existeLibro);
         existeEstudiante.agregarPrestamo(nuevo); 
+        
+        if(existeLibro.getDisponibles() == 0) return Retorno.error5();
+        
+        
+        
+        
         Prestamos.agregarOrdenado(nuevo);
         
 //        System.out.println("===========================================================");
@@ -240,9 +244,11 @@ public class Sistema implements IObligatorio {
     }
 
     @Override
-    public Retorno librosMasPrestados() {
+    public Retorno librosMasPrestados(int n) {
+        if(n <= 0) return Retorno.error1();
         Retorno res = new Retorno(Retorno.Resultado.OK);
-        res.valorString = LibrosOrdenPrestados.mostrarPrestados();
+        res.valorString = LibrosOrdenPrestados.mostrarPrestados(n);
+        System.out.println(LibrosOrdenPrestados.mostrar());
         return res;
     }
 
@@ -282,8 +288,17 @@ public class Sistema implements IObligatorio {
         return Retorno.ok();
     }
 
+    
+    /*
+    Se deberán listar la cantidad de libros reservados por cada categoría en orden alfabético, cargando el resultado de los
+    libros en el valor string del retorno
+    */
     @Override
     public Retorno prestamosXCategoría() {
-        return Retorno.noImplementada();
+        Retorno res = new Retorno(Retorno.Resultado.OK); 
+        res.valorString = Libros.obtenerReservadosPorCategoria();
+        return res;
     }
+    
+
 }

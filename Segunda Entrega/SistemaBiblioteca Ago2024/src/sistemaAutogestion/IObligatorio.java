@@ -80,7 +80,7 @@ public interface IObligatorio {
    
    //pre: Existe la lista de préstamos
    //post: Se listan los libros más prestados ordenado por ISBN en Formato: nombreLibro1#ISBN1#cantidadReservas1. En caso de existir libros con la misma cantidad “máxima de préstamo”, se deberán mostrar todos.
-   public Retorno librosMasPrestados();
+   public Retorno librosMasPrestados(int n);
    
    //pre: Se reciben las cantidades (> 0) de eliminaciones que se quieren deshacer.
    //post: Si existen menos de n eliminaciones, se deshacen todas las realizadas. Se devuelven los libros recuperados en Formato: nombreLibro1#ISBN1
