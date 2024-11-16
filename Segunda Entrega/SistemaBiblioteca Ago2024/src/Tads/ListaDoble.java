@@ -6,8 +6,8 @@ import Tads.IListaDoble;
 
 public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
     
-    private NodoDoble<T> inicio = null;
-    private NodoDoble<T> fin = null;
+    protected NodoDoble<T> inicio = null;
+    protected NodoDoble<T> fin = null;
     protected int cantidadNodos = 0;
 
     public ListaDoble() {}

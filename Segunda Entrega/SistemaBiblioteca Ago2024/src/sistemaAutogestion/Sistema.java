@@ -96,8 +96,9 @@ public class Sistema implements IObligatorio {
         if(Libros.contieneElemento(agregar)) return Retorno.error2();        
         
         Libros.agregarOrdenado(agregar);
-        LibrosOrdenPrestados.agregarOrdenadoPrestamos(agregar);       
+        LibrosOrdenPrestados.agregarOrdenadoPrestamos(agregar);
         
+        System.out.println(LibrosOrdenPrestados.mostrar());
         return Retorno.ok();
     }
     
@@ -125,8 +126,16 @@ public class Sistema implements IObligatorio {
         existeEstudiante.agregarPrestamo(nuevo); 
         Prestamos.agregarOrdenado(nuevo);
         
+        System.out.println("===========================================================");
+        System.out.println("LISTA ANTES DE BORRAR  " + librosMasPrestados().valorString);
         if(LibrosOrdenPrestados.borrarElementoCantPrest(existeLibro)) {
+            System.out.println();
+            System.out.println("LISTA DESPUES DE BORRAR  " + librosMasPrestados().valorString);
             LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro);
+            System.out.println();
+            System.out.println("LISTA DESPUES DE VOLVER A AGREGAR  " + librosMasPrestados().valorString);
+            System.out.println("===========================================================");
+            System.out.println();
             return Retorno.ok();
         }
         else {
@@ -136,6 +145,7 @@ public class Sistema implements IObligatorio {
                 Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         return Retorno.ok();
     }    
 
@@ -230,7 +240,6 @@ public class Sistema implements IObligatorio {
     public Retorno librosMasPrestados() {
         Retorno res = new Retorno(Retorno.Resultado.OK);
         res.valorString = LibrosOrdenPrestados.mostrarPrestados();
-        System.out.println(LibrosOrdenPrestados.mostrar());
         return res;
     }
 

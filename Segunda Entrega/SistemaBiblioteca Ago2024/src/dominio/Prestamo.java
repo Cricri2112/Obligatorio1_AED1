@@ -36,12 +36,6 @@ public class Prestamo implements Comparable<Prestamo> {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-
-    //         return this.estudiante.getNumero() < o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == -1
-//                ? -1
-//                : this.estudiante.getNumero() == o.estudiante.getNumero() && this.libro.getISBN().compareTo(o.libro.getISBN()) == 0
-//                    ? 0
-//                    : 1;
     
     @Override
     public int compareTo(Prestamo o) {
@@ -53,10 +47,6 @@ public class Prestamo implements Comparable<Prestamo> {
                 : -1;
                     
     }
-//    
-//    public String toString(){
-//        return this.getNombre() + "#" + this.getApellido() + "#" + this.getNumero();
-//    }
     
     @Override
     public boolean equals(Object o) {
@@ -69,6 +59,7 @@ public class Prestamo implements Comparable<Prestamo> {
             this.estudiante.equals(comparar.getEstudiante())           
         );
     }
+    
     @Override
     public String toString(){
         
