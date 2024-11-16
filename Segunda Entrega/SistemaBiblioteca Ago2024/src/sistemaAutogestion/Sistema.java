@@ -228,9 +228,12 @@ public class Sistema implements IObligatorio {
 //1. Si no existe un estudiante con ese nombre.     
     @Override
     public Retorno listarPrestamos(int numero) {
-        Retorno res = new Retorno(Retorno.Resultado.OK);
+        Retorno res = new Retorno(Retorno.Resultado.OK);        
+        
+        if(numero <= 0 || numero > 500000) return Retorno.error1();
+        
         Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
-        if (existeEstudiante == null) return Retorno.error1();
+        if (existeEstudiante == null) return Retorno.error2();
         
         res.valorString = existeEstudiante.getPrestamos().mostrar();
         return res;
