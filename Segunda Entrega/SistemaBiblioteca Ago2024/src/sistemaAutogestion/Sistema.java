@@ -98,7 +98,7 @@ public class Sistema implements IObligatorio {
         Libros.agregarOrdenado(agregar);
         LibrosOrdenPrestados.agregarOrdenadoPrestamos(agregar);
         
-        System.out.println(LibrosOrdenPrestados.mostrar());
+//        System.out.println(LibrosOrdenPrestados.mostrar());
         return Retorno.ok();
     }
     
@@ -126,25 +126,25 @@ public class Sistema implements IObligatorio {
         existeEstudiante.agregarPrestamo(nuevo); 
         Prestamos.agregarOrdenado(nuevo);
         
-        System.out.println("===========================================================");
-        System.out.println("LISTA ANTES DE BORRAR  " + librosMasPrestados().valorString);
+//        System.out.println("===========================================================");
+//        System.out.println("LISTA ANTES DE BORRAR  " + librosMasPrestados().valorString);
         if(LibrosOrdenPrestados.borrarElementoCantPrest(existeLibro)) {
-            System.out.println();
-            System.out.println("LISTA DESPUES DE BORRAR  " + librosMasPrestados().valorString);
+//            System.out.println();
+//            System.out.println("LISTA DESPUES DE BORRAR  " + librosMasPrestados().valorString);
             LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro);
-            System.out.println();
-            System.out.println("LISTA DESPUES DE VOLVER A AGREGAR  " + librosMasPrestados().valorString);
-            System.out.println("===========================================================");
-            System.out.println();
+//            System.out.println();
+//            System.out.println("LISTA DESPUES DE VOLVER A AGREGAR  " + librosMasPrestados().valorString);
+//            System.out.println("===========================================================");
+//            System.out.println();
             return Retorno.ok();
         }
-        else {
-            try {
-                throw new Exception("SE ROMPIO" + existeLibro.toString());
-            } catch (Exception ex) {
-                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        else {
+//            try {
+//                throw new Exception("SE ROMPIO" + existeLibro.toString());
+//            } catch (Exception ex) {
+//                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
         
         return Retorno.ok();
     }    
