@@ -168,9 +168,8 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
         }
         else {
             NodoDoble<T> actual = this.getInicio();
-            //Boolean sigue = true;
             NodoDoble<T> res = null;
-            while(actual!= null /*&& sigue*/){
+            while(actual!= null){
                 if(actual.getValor().equals(obj)) {
                     return actual.getValor();
                 }
@@ -179,11 +178,6 @@ public class ListaDoble<T extends Comparable<T>> implements IListaDoble<T> {
                 else actual = actual.getSiguiente();
             }
             return null;
-//            // Nunca debería ser null porque ya se pregunta si: 
-//            // this.menorPrimerMayorUltimo(nodo)
-//            return res != null
-//                ? res.getValor()
-//                : null;
         }
     }
 

@@ -120,36 +120,21 @@ public class Sistema implements IObligatorio {
         
         if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error6();
         
+        if(existeLibro.getDisponibles() == 0) {
+            Prestamo nuevo = new Prestamo(existeEstudiante, existeLibro);
+            existeEstudiante.agregarPrestamo(nuevo); 
+            return Retorno.error5();
+        }
+        
         Prestamo nuevo = new Prestamo(existeEstudiante, existeLibro);
         existeEstudiante.agregarPrestamo(nuevo); 
         
-        if(existeLibro.getDisponibles() == 0) return Retorno.error5();
-        
-        
-        
-        
         Prestamos.agregarOrdenado(nuevo);
         
-//        System.out.println("===========================================================");
-//        System.out.println("LISTA ANTES DE BORRAR  " + librosMasPrestados().valorString);
         if(LibrosOrdenPrestados.borrarElementoCantPrest(existeLibro)) {
-//            System.out.println();
-//            System.out.println("LISTA DESPUES DE BORRAR  " + librosMasPrestados().valorString);
             LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro);
-//            System.out.println();
-//            System.out.println("LISTA DESPUES DE VOLVER A AGREGAR  " + librosMasPrestados().valorString);
-//            System.out.println("===========================================================");
-//            System.out.println();
             return Retorno.ok();
         }
-//        else {
-//            try {
-//                throw new Exception("SE ROMPIO" + existeLibro.toString());
-//            } catch (Exception ex) {
-//                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-        
         return Retorno.ok();
     }    
 
@@ -244,11 +229,9 @@ public class Sistema implements IObligatorio {
     }
 
     @Override
-    public Retorno librosMasPrestados(int n) {
-        if(n <= 0) return Retorno.error1();
+    public Retorno librosMasPrestados() {
         Retorno res = new Retorno(Retorno.Resultado.OK);
-        res.valorString = LibrosOrdenPrestados.mostrarPrestados(n);
-        System.out.println(LibrosOrdenPrestados.mostrar());
+        res.valorString = LibrosOrdenPrestados.mostrarPrestados();
         return res;
     }
 
@@ -290,15 +273,13 @@ public class Sistema implements IObligatorio {
 
     
     /*
-    Se deberán listar la cantidad de libros reservados por cada categoría en orden alfabético, cargando el resultado de los
-    libros en el valor string del retorno
+    Se deberán listar la cantidad de libros prestados (activos y finalizados) por cada categoría en orden alfabético, 
+    cargando el resultado de los libros en el valor string del retorno.
     */
     @Override
     public Retorno prestamosXCategoría() {
         Retorno res = new Retorno(Retorno.Resultado.OK); 
-        res.valorString = Libros.obtenerReservadosPorCategoria();
+        res.valorString = Libros.obtenerPrestadosPorCategoria();
         return res;
     }
-    
-
 }

@@ -1,26 +1,26 @@
 package dominio;
 
-public class CategoriaReservas implements Comparable<CategoriaReservas> {
+public class CategoriaPrestamos implements Comparable<CategoriaPrestamos> {
     public String categoria;
-    public Integer reservas;
+    public Integer prestamos;
     
-    public CategoriaReservas(String cat) {
+    public CategoriaPrestamos(String cat) {
         categoria = cat;
-        reservas = 0;
+        prestamos = 0;
     }
     
-    public CategoriaReservas(String cat, Integer res) {
+    public CategoriaPrestamos(String cat, Integer res) {
         categoria = cat;
-        reservas = res;
+        prestamos = res;
     }
     
     //Formato: categoria1#cantidad1|categoría2#cantidad2
     public String toString() {
-        return categoria + "#" + "cantidad" + reservas;
+        return categoria + "#" + "cantidad" + prestamos;
     }
 
     @Override
-    public int compareTo(CategoriaReservas o) {
+    public int compareTo(CategoriaPrestamos o) {
         if(this.categoria.compareTo(o.categoria) > 0) return 1;
         if(this.categoria.compareTo(o.categoria) == 0) return 0;
         return -1;
@@ -30,7 +30,7 @@ public class CategoriaReservas implements Comparable<CategoriaReservas> {
     public boolean equals(Object o) {
         if(o == null) return false;
         if(o.getClass() != this.getClass()) return false;
-        CategoriaReservas comparar = (CategoriaReservas) o;
+        CategoriaPrestamos comparar = (CategoriaPrestamos) o;
         return categoria == comparar.categoria;                   
     }
 }

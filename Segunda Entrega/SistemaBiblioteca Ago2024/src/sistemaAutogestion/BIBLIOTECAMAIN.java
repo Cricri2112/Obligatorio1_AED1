@@ -92,7 +92,7 @@ public class BIBLIOTECAMAIN {
         p.ver(s.prestarLibro("3", 0).resultado, Retorno.Resultado.ERROR_3, "Error 3 numero de estudiante fuera de rango");
         p.ver(s.prestarLibro("3", 500001).resultado, Retorno.Resultado.ERROR_3, "Error 3 numero de estudiante fuera de rango");
         p.ver(s.prestarLibro("3", 31).resultado, Retorno.Resultado.ERROR_4, "Error 4 no Existe ese estudiante");
-        p.ver(s.prestarLibro("10", 1).resultado, Retorno.Resultado.ERROR_5, "Error 5 Libro sin stock");
+        p.ver(s.prestarLibro("10", 6).resultado, Retorno.Resultado.ERROR_5, "Error 5 Libro sin stock");
         p.ver(s.prestarLibro("3", 1).resultado, Retorno.Resultado.ERROR_6, "Error 6 ya existe ese prestamo para ese estudiante libro");
         p.ver(s.prestarLibro("9", 1).resultado, Retorno.Resultado.ERROR_6, "Error 6 ya tient 8 prestamos activos");
 
@@ -152,7 +152,7 @@ public class BIBLIOTECAMAIN {
         p.ver(s.listarPrestamos(2505).resultado, Retorno.Resultado.ERROR_2, "Error 2 no existe un estudiante con ese número");
 
         //3.5 Libros más prestados
-        p.ver(s.librosMasPrestados(3).resultado, Retorno.Resultado.OK, "Ok se listan libros en orden de más prestados");
+        p.ver(s.librosMasPrestados().resultado, Retorno.Resultado.OK, "Ok se listan libros en orden de más prestados");
 
         //3.6 Deshacer n eliminaciones
         System.out.println("Libros con eliminado " + s.listarLibros().valorString + "\n");

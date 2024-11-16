@@ -132,23 +132,29 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
     */
     
      
-     public String mostrarPrestados(int n) {
+     public String mostrarPrestados() {
         if(this.esVacia()){
             return "";
         }
         else 
         {
             ListaDoble<Libro> listaRes = new ListaDoble();
-            NodoDoble<Libro> actual = getInicio();
-            //
+            listaRes.agregarInicio(getInicio().getValor());
             
-            while(actual != null && n > 0) {
-                listaRes.agregarOrdenado(actual.getValor());
-                actual = actual.getSiguiente();
-                if(actual != null) {
-                    Libro libroActual = actual.getValor();
-                    Libro libroAnterior = actual.getAnterior().getValor();
-                    if(libroActual.getCantidadPrestHist() != libroAnterior.getCantidadPrestHist()) n--;
+            NodoDoble<Libro> actual = getInicio().getSiguiente();
+            
+            int mayorActual = listaRes.getInicio().getValor().cantPrestadosHist();
+            
+            while(actual != null) {
+                Libro libroActual = actual.getValor();
+                int prestamosActual = libroActual.cantPrestadosHist();
+                
+                if(prestamosActual == mayorActual) {
+                    listaRes.agregarOrdenado(libroActual);
+                    actual = actual.getSiguiente();
+                }
+                else {
+                    actual = null;
                 }
             }
             
@@ -215,15 +221,16 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
     }
     
     
-    public String obtenerReservadosPorCategoria() {
-        ListaDoble<CategoriaReservas> res = new ListaDoble();
+    public String obtenerPrestadosPorCategoria() {
+        ListaDoble<CategoriaPrestamos> res = new ListaDoble();
         NodoDoble<Libro> aux = getInicio();
         while(aux != null) {
             Libro libroAux = aux.getValor();
-            CategoriaReservas nuevo = new CategoriaReservas(libroAux.getCategoria(), libroAux.getCantidadReservas());
-            CategoriaReservas contiene = res.obtenerElemento(nuevo);
+            CategoriaPrestamos nuevo = new CategoriaPrestamos(libroAux.getCategoria(), libroAux.cantPrestadosHist());
+            CategoriaPrestamos contiene = res.obtenerElemento(nuevo);
+            
             if(contiene != null) {
-                contiene.reservas = nuevo.reservas;
+                contiene.prestamos += nuevo.prestamos;
             }
             else {
                 res.agregarOrdenado(nuevo);
