@@ -8,7 +8,7 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
     
     private NodoDoble<T> inicio = null;
     private NodoDoble<T> fin = null;
-    private int cantidadNodos = 0;
+    protected int cantidadNodos = 0;
 
     public ListaDoble() {}
 
@@ -124,7 +124,7 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
         }
     }
 
-    private Boolean menorPrimerMayorUltimo(T obj) {
+    protected Boolean menorPrimerMayorUltimo(T obj) {
         return (this.getInicio().getValor().compareTo(obj) == 1
                 || this.getFin().getValor().compareTo(obj) == -1);
     }
@@ -221,48 +221,45 @@ public abstract class ListaDoble<T extends Comparable<T>> implements IListaDoble
 
     @Override
     public Boolean borrarElemento(T obj) {
-        if (!this.esVacia()) {
-            if (this.menorPrimerMayorUltimo(obj)) {
+        if (this.esVacia()) return false;
+        
+        if (this.menorPrimerMayorUltimo(obj)) {
+            return false;
+        }
+        
+        if (this.cantidadNodos == 1) {
+            if (this.getInicio().equals(obj)) {
+                this.borrarInicio();
+                return true;
+            } else {
                 return false;
             }
-            if (this.cantidadNodos == 1) {
-                if (this.getInicio().equals(obj)) {
-                    this.borrarInicio();
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                if (this.getInicio().equals(obj)) {
-                    this.borrarInicio();
-                    return true;
-                }
-                if (this.getFin().equals(obj)) {
-                    this.borrarFin();
-                    return true;
-                }
-                NodoDoble<T> actual = this.getInicio().getSiguiente();
-                Boolean sigue = true;
-                NodoDoble<T> res = null;
-                while (actual != null && sigue) {
-                    if (actual.getValor().equals(obj) || 
-                        actual.getValor().compareTo(obj) == 1) {
-                        res = actual;
-                        sigue = false;
-                    } else {
-                        actual = actual.getSiguiente();
-                    }
-                }
-                if (res!= null) {
+        } 
+        else {
+            
+            if (this.getInicio().equals(obj)) {
+                this.borrarInicio();
+                return true;
+            }
+            if (this.getFin().equals(obj)) {
+                this.borrarFin();
+                return true;
+            }
+            
+            NodoDoble<T> actual = this.getInicio().getSiguiente();
+            while (actual != null ) {
+                if (actual.getValor().equals(obj) || actual.getValor().compareTo(obj) == 1) {
                     actual.getAnterior().setSiguiente(actual.getSiguiente());
                     actual.getSiguiente().setAnterior(actual.getAnterior());
                     this.cantidadNodos--;
                     return true;
                 }
-                return false;
+                
+                actual = actual.getSiguiente();
             }
+            
+            return false;
         }
-        return false;
     }
 
     @Override

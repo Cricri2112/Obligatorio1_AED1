@@ -7,6 +7,8 @@ import dominio.Libro;
 import dominio.ListaDobleLibro;
 import dominio.ListaDoblePrestamo;
 import dominio.Prestamo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Sistema implements IObligatorio {
     public ListaDobleLibro Libros;
@@ -123,8 +125,17 @@ public class Sistema implements IObligatorio {
         existeEstudiante.agregarPrestamo(nuevo); 
         Prestamos.agregarOrdenado(nuevo);
         
-        LibrosOrdenPrestados.borrarElemento(existeLibro);
-        LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro);
+        if(LibrosOrdenPrestados.borrarElementoCantPrest(existeLibro)) {
+            LibrosOrdenPrestados.agregarOrdenadoPrestamos(existeLibro);
+            return Retorno.ok();
+        }
+        else {
+            try {
+                throw new Exception("SE ROMPIO" + existeLibro.toString());
+            } catch (Exception ex) {
+                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return Retorno.ok();
     }    
 
@@ -219,6 +230,7 @@ public class Sistema implements IObligatorio {
     public Retorno librosMasPrestados() {
         Retorno res = new Retorno(Retorno.Resultado.OK);
         res.valorString = LibrosOrdenPrestados.mostrarPrestados();
+        System.out.println(LibrosOrdenPrestados.mostrar());
         return res;
     }
 

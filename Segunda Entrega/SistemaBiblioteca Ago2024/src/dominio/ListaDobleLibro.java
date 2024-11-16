@@ -35,39 +35,71 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
     }
     
     public void agregarOrdenadoPrestamos(Libro libro) {
-        if (this.esVacia() || 
-           (this.getInicio().getValor().cantPrestadosHist() <= libro.cantPrestadosHist() &&
-            this.getInicio().getValor().compareTo(libro) == 1)
-        ) this.agregarInicio(libro);
+        if(esVacia()) {
+            this.agregarInicio(libro);
+        }
         
-        else {
-            if (this.getFin().getValor().cantPrestadosHist() >= libro.cantPrestadosHist() &&
-                this.getInicio().getValor().compareTo(libro) == -1
-            ) this.agregarFinal(libro);
-
+        // Evaluo que el libro que ingresa tenga una cantidad mayor igual que el primero
+        else if(getInicio().getValor().cantPrestadosHist() <= libro.cantPrestadosHist()) {
+            
+            // El libro que ingresa tiene mas prestados que el primero
+            if(libro.cantPrestadosHist() > getInicio().getValor().cantPrestadosHist()) agregarInicio(libro);
             else {
-                NodoDoble<Libro> actual = this.getInicio();
-                NodoDoble<Libro> agregar = new NodoDoble(libro);
-                boolean agregado = false;
-
-                while (actual.getSiguiente() != null && !agregado) {
-                    // 
-                    if (actual.getValor().cantPrestadosHist() <= agregar.getValor().cantPrestadosHist() || 
-                        (actual.getValor().cantPrestadosHist() == agregar.getValor().cantPrestadosHist() &&
-                         actual.getValor().compareTo(libro) == 1)
-                    )
-                    {
-                        agregar.setSiguiente(actual);
-                        agregar.setAnterior(actual.getAnterior());
-                        agregar.getAnterior().setSiguiente(agregar);
-                        agregar.getSiguiente().setAnterior(agregar);
-                        this.setCantidadNodos(this.cantElementos() + 1);
-                        agregado = true;
-                    }
-                    actual = actual.getSiguiente();
+                // El libro que ingresa tiene ISBN menor que el primero
+                if(getInicio().getValor().compareTo(libro) == 1) agregarInicio(libro);
+                // Como tiene ISBN mayor que el primero, se agrega en segundo lugar
+                else {
+                    NodoDoble<Libro> nuevo = new NodoDoble(libro);
+                    
+                    getInicio().setSiguiente(nuevo);
+                    nuevo.setAnterior(getInicio());
+                    cantidadNodos++;
                 }
             }
         }
+        
+        // Evaluo que el libro que ingresa tenga una cantidad menor igual que el ultimo
+        else if(libro.cantPrestadosHist() <= getFin().getValor().cantPrestadosHist()) {
+            
+            // El libro que ingresa tiene menos prestados que el ultimo
+            if(libro.cantPrestadosHist() < getFin().getValor().cantPrestadosHist()) agregarFinal(libro);
+            else {
+                // El libro que ingresa tiene ISBN mayor que el ultimo
+                if(getFin().getValor().compareTo(libro) == -1) agregarFinal(libro);
+                // Como tiene ISBN menor que el ultimo, se agrega en ante-ultimo
+                else {
+                    NodoDoble<Libro> nuevo = new NodoDoble(libro);
+                    
+                    getFin().setAnterior(nuevo);
+                    nuevo.setSiguiente(getFin());
+                    cantidadNodos++;
+                }
+            }
+        }
+        
+        // Para todo lo demás, existe el while
+        else {
+            NodoDoble<Libro> actual = this.getInicio();
+            NodoDoble<Libro> agregar = new NodoDoble(libro);
+            boolean agregado = false;
+
+            while (actual.getSiguiente() != null && !agregado) {
+                if (actual.getValor().cantPrestadosHist() <= agregar.getValor().cantPrestadosHist() || 
+                    (actual.getValor().cantPrestadosHist() == agregar.getValor().cantPrestadosHist() &&
+                     actual.getValor().compareTo(libro) == 1)
+                )
+                {
+                    agregar.setSiguiente(actual);
+                    agregar.setAnterior(actual.getAnterior());
+                    agregar.getAnterior().setSiguiente(agregar);
+                    agregar.getSiguiente().setAnterior(agregar);
+                    this.setCantidadNodos(this.cantElementos() + 1);
+                    agregado = true;
+                }
+                actual = actual.getSiguiente();
+            }
+        }
+        
     }
     
      public String mostrarPrestados() {
@@ -88,7 +120,43 @@ public class ListaDobleLibro extends ListaDoble<Libro>  {
         
     }
     
-    
+    public Boolean borrarElementoCantPrest(Libro obj) {
+        if (this.esVacia()) return false;
+        
+        if (this.cantidadNodos == 1) {
+            if (this.getInicio().equals(obj)) {
+                this.borrarInicio();
+                return true;
+            } else {
+                return false;
+            }
+        } 
+        else {
+            
+            if (this.getInicio().equals(obj)) {
+                this.borrarInicio();
+                return true;
+            }
+            if (this.getFin().equals(obj)) {
+                this.borrarFin();
+                return true;
+            }
+            
+            NodoDoble<Libro> actual = this.getInicio().getSiguiente();
+            while (actual != null ) {
+                if (actual.getValor().equals(obj)) {
+                    actual.getAnterior().setSiguiente(actual.getSiguiente());
+                    actual.getSiguiente().setAnterior(actual.getAnterior());
+                    this.cantidadNodos--;
+                    return true;
+                }
+                
+                actual = actual.getSiguiente();
+            }
+            
+            return false;
+        }
+    }
     
     
 //    private void ordernarPorISBN(NodoDoble<Libro> nuevo, NodoDoble<Libro> actual){

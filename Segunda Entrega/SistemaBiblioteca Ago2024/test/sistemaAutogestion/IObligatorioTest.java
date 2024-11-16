@@ -490,12 +490,11 @@ public class IObligatorioTest {
         miSistema.agregarEstudiante("NomreEstudiante3", "ApellidoEstudiante3", 1002);
         
         miSistema.prestarLibro("ISBN2", 1000);
-        miSistema.prestarLibro("ISBN2", 1001);
         miSistema.prestarLibro("ISBN4", 1000);
         miSistema.prestarLibro("ISBN4", 1001);
+        miSistema.prestarLibro("ISBN2", 1001);
         miSistema.prestarLibro("ISBN1", 1001);
         
-
         Retorno r = miSistema.librosMasPrestados();
         assertEquals(Retorno.ok().resultado, r.resultado);
         assertEquals("NombreLibro2#ISBN2#Categoria1#2|NombreLibro4#ISBN4#Categoria2#2|NombreLibro1#ISBN1#Categoria3#1", r.valorString);
