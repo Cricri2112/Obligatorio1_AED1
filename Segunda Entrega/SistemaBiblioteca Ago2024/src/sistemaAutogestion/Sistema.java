@@ -15,7 +15,7 @@ public class Sistema implements IObligatorio {
     public ListaDobleLibro LibrosOrdenPrestados;
     public Pila<Libro> LibrosEliminados;
     public ListaDoble<Estudiante> Estudiantes;
-    public ListaDoblePrestamo Prestamos;
+    public ListaDoblePrestamo Prestamos;    
     
     public Sistema() {
         crearSistemaDeGestion();
