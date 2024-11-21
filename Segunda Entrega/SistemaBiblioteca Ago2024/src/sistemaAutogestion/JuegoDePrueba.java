@@ -34,7 +34,7 @@ public class JuegoDePrueba {
 
         //2.3.Obtener Estudiante
         p.ver(s.obtenerEstudiante(1).resultado, Retorno.Resultado.OK, "OK: se obtuvo estudiante");
-        
+
         p.ver(s.obtenerEstudiante(-1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: numero fuera de rango");
         p.ver(s.obtenerEstudiante(0).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: numero fuera de rango");
         p.ver(s.obtenerEstudiante(500001).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: numero fuera de rango");
@@ -45,7 +45,7 @@ public class JuegoDePrueba {
         p.ver(s.agregarLibro("Libro 0", "0", "categoria 0", 3).resultado, Retorno.Resultado.OK, "OK: se agrega libro 0");
         p.ver(s.agregarLibro("Libro 1", "1", "categoria 1", 1).resultado, Retorno.Resultado.OK, "OK: se agrega libro 1");
         p.ver(s.prestarLibro("1", 1).resultado, Retorno.Resultado.OK, "OK: se agrega prestamo a estudiante 1");
-        
+
         p.ver(s.eliminarEstudiante(-10).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: Se intenta eliminar estudiante con nro fuera de rango");
         p.ver(s.eliminarEstudiante(0).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: Se intenta eliminar estudiante con nro fuera de rango");
         p.ver(s.eliminarEstudiante(500001).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: Se intenta eliminar estudiante con nro fuera de rango");
@@ -76,7 +76,7 @@ public class JuegoDePrueba {
 
         //2.6. Prestar Libro
         p.ver(s.prestarLibro("3", 1).resultado, Retorno.Resultado.OK, "OK: se presto Libro 1 ejemplar 1 libro 3");
-        p.ver(s.prestarLibro("4", 2).resultado, Retorno.Resultado.OK, "OK: se presto ejemplar 2 libro 3");        
+        p.ver(s.prestarLibro("4", 2).resultado, Retorno.Resultado.OK, "OK: se presto ejemplar 2 libro 3");
         p.ver(s.prestarLibro("10", 2).resultado, Retorno.Resultado.OK, "OK: se presto Libro 10 ejemplar 1");
         p.ver(s.prestarLibro("15", 1).resultado, Retorno.Resultado.OK, "OK: se presto Libro 1 ejemplar 1 libro 1");
         p.ver(s.prestarLibro("2", 1).resultado, Retorno.Resultado.OK, "OK: se presto Libro 2 ejemplar 1 libro 2");
@@ -84,7 +84,7 @@ public class JuegoDePrueba {
         p.ver(s.prestarLibro("5", 1).resultado, Retorno.Resultado.OK, "OK: se presto Libro 5 ejemplar 1 libro 5");
         p.ver(s.prestarLibro("6", 1).resultado, Retorno.Resultado.OK, "OK: se presto Libro 6 ejemplar 1 libro 6");
         p.ver(s.prestarLibro("8", 1).resultado, Retorno.Resultado.OK, "OK: se presto Libro 8 ejemplar 1 libro 8");
-        
+
         p.ver(s.prestarLibro("", 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN vacio");
         p.ver(s.prestarLibro(null, 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN null");
         p.ver(s.prestarLibro("25", 1).resultado, Retorno.Resultado.ERROR_2, "ERROR 2: no existe libro con ese ISBN");
@@ -100,17 +100,17 @@ public class JuegoDePrueba {
         p.ver(s.reservarLibro("15", 2).resultado, Retorno.Resultado.OK, "OK: Se reserva libro 15");
 
         p.ver(s.reservarLibro("", 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN null");
-        p.ver(s.reservarLibro(null, 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN null");        
+        p.ver(s.reservarLibro(null, 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN null");
         p.ver(s.reservarLibro("34", 1).resultado, Retorno.Resultado.ERROR_2, "ERROR 2: no existe ese libro");
         p.ver(s.reservarLibro("3", -1).resultado, Retorno.Resultado.ERROR_3, "ERROR 3: numero fuera de rango");
         p.ver(s.reservarLibro("3", 0).resultado, Retorno.Resultado.ERROR_3, "ERROR 3: numero fuera de rango");
-        p.ver(s.reservarLibro("3", 500001).resultado, Retorno.Resultado.ERROR_3, "ERROR 3: numero fuera de rango");        
-        p.ver(s.reservarLibro("3", 22).resultado, Retorno.Resultado.ERROR_4, "ERROR 4: no existe ese estudiante");        
+        p.ver(s.reservarLibro("3", 500001).resultado, Retorno.Resultado.ERROR_3, "ERROR 3: numero fuera de rango");
+        p.ver(s.reservarLibro("3", 22).resultado, Retorno.Resultado.ERROR_4, "ERROR 4: no existe ese estudiante");
         p.ver(s.reservarLibro("2", 5).resultado, Retorno.Resultado.ERROR_5, "ERROR 5: ese libro aún tiene stock");
 
         //2.8.Devolver Libro
         p.ver(s.devolverLibro("1", 1).resultado, Retorno.Resultado.OK, "OK: se devuelve el libro 1, estudiante 1");
-        
+
         p.ver(s.devolverLibro("", 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN vacío");
         p.ver(s.devolverLibro(null, 1).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: ISBN nulo");
         p.ver(s.devolverLibro("100", 1).resultado, Retorno.Resultado.ERROR_2, "ERROR 2: no existe libro con ese ISBN");
@@ -122,7 +122,7 @@ public class JuegoDePrueba {
 
         //2.9 Eliminar Libro
         p.ver(s.eliminarLibro("ISBN2").resultado, Retorno.Resultado.OK, "OK: se elimina el libro ISBN2");
-        
+
         p.ver(s.eliminarLibro("").resultado, Retorno.Resultado.ERROR_1, "ERROR 1: el ISBN es vacío a null");
         p.ver(s.eliminarLibro(null).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: el ISBN es vacío a null");
         p.ver(s.eliminarLibro("1").resultado, Retorno.Resultado.ERROR_2, "ERROR 2: el libro tiene préstamos");
@@ -162,13 +162,13 @@ public class JuegoDePrueba {
 
         //3.7 Cantidad de préstamos activos
         p.ver(s.cantidadPrestamosActivos("1").resultado, Retorno.Resultado.OK, "OK: se muestra la cantidad de préstamos del libro 1");
-        
+
         p.ver(s.cantidadPrestamosActivos("").resultado, Retorno.Resultado.ERROR_1, "ERROR 1: el IBSN es vacío o null");
         p.ver(s.cantidadPrestamosActivos(null).resultado, Retorno.Resultado.ERROR_1, "ERROR 1: el IBSN es vacío o null");
 
         //3.8 Ranking de categorías
         p.ver(s.prestamosXCategoría().resultado, Retorno.Resultado.OK, "OK: se muestra el ranking de prestamos por categoria");
-        
+
         p.imprimirResultadosPrueba();
     }
 }

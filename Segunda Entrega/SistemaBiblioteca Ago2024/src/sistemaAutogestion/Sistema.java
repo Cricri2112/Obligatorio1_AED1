@@ -118,13 +118,13 @@ public class Sistema implements IObligatorio {
         Estudiante existeEstudiante = Estudiantes.obtenerElemento(new Estudiante(numero));
         if(existeEstudiante==null)return Retorno.error4();
         
-        if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error6();
-        
         if(existeLibro.getDisponibles() == 0) {
             Prestamo nuevo = new Prestamo(existeEstudiante, existeLibro);
             existeEstudiante.agregarPrestamo(nuevo); 
             return Retorno.error5();
         }
+        
+        if(existeEstudiante.yaTienePrestamoActivo(ISBN) || existeEstudiante.cantPrestamosActivos() == 8 )return Retorno.error6();
         
         Prestamo nuevo = new Prestamo(existeEstudiante, existeLibro);
         existeEstudiante.agregarPrestamo(nuevo); 
